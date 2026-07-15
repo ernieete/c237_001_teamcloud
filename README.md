@@ -1,2 +1,3 @@
 # c237_001_teamcloud
-c237_ca2😭😭
+🍽 Food Recipe App
+It is a interactive website where users can create/edit/delete their own recipe. Those recipes will then be displayed in the home page where everyone can see. 
