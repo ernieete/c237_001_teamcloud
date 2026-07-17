@@ -1,0 +1,27 @@
+{
+  "name": "simply-homemade",
+  "version": "1.0.0",
+  "description": "A food recipe sharing application for C237 CA2",
+  "main": "app.js",
+  "scripts": {
+  "start": "node app.js",
+  "dev": "node app.js"
+},
+  "keywords": [
+    "recipe",
+    "express",
+    "mysql",
+    "ejs"],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.4.2",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "multer": "^2.2.0",
+    "mysql2": "^3.23.0"
+  }
+}
