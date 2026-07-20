@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Recipe</title>
+</head>
+<body>
+
+<h1>Add Recipe</h1>
+
+<form action="/recipes/add" method="POST">
+
+    <label>Title</label><br>
+    <input
+        type="text"
+        name="title"
+        required
+    ><br><br>
+
+    <label>Description</label><br>
+    <textarea
+        name="description"
+    ></textarea><br><br>
+
+    <label>Ingredients</label><br>
+    <textarea
+        name="ingredients"
+        required
+    ></textarea><br><br>
+
+    <label>Instructions</label><br>
+    <textarea
+        name="instructions"
+        required
+    ></textarea><br><br>
+
+    <label>Servings</label><br>
+    <input
+        type="number"
+        name="servings"
+    ><br><br>
+
+    <label>Category</label><br>
+
+    <select name="category">
+
+        <option value="breakfast">Breakfast</option>
+        <option value="lunch">Lunch</option>
+        <option value="dinner">Dinner</option>
+        <option value="dessert">Dessert</option>
+        <option value="drinks">Drinks</option>
+        <option value="snacks">Snacks</option>
+
+    </select>
+
+    <br><br>
+
+    <label>Difficulty</label><br>
+
+    <select name="difficulty">
+
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+
+    </select>
+
+    <br><br>
+
+    <label>Cooking Time (minutes)</label><br>
+
+    <input
+        type="number"
+        name="cooking_time"
+        required
+    >
+
+    <br><br>
+
+    <button type="submit">
+
+        Add Recipe
+
+    </button>
+
+</form>
+
+</body>
+</html>
