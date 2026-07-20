@@ -4,14 +4,15 @@
   "description": "A food recipe sharing application for C237 CA2",
   "main": "app.js",
   "scripts": {
-  "start": "node app.js",
-  "dev": "node app.js"
-},
+    "start": "node app.js",
+    "dev": "node app.js"
+  },
   "keywords": [
     "recipe",
     "express",
     "mysql",
-    "ejs"],
+    "ejs"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",

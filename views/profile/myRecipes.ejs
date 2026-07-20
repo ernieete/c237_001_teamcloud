@@ -1,0 +1,9 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<main class="page-section"><div class="container">
+  <div class="page-heading-row"><div><h1>My Recipes</h1><p>Recipes created using your account.</p></div><a class="btn btn-brown" href="/recipes/add">Add Recipe</a></div>
+  <% if (!recipes.length) { %><div class="empty-card"><h3>No recipes yet</h3><p>Your recipes will appear here after you create one.</p></div><% } else { %>
+    <div class="row g-4"><% recipes.forEach(recipe => { %><div class="col-md-6 col-lg-4"><div class="simple-recipe-card"><h3><%= recipe.title %></h3><p><%= recipe.description || 'No description.' %></p><a href="/recipes/<%= recipe.id %>">View recipe</a></div></div><% }) %></div>
+  <% } %>
+</div></main>
+<%- include('../partials/footer') %>

@@ -1,0 +1,31 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<main class="page-section"><div class="container">
+  <% if (message) { %><div class="alert alert-success"><%= message %></div><% } %>
+  <div class="profile-card">
+    <div class="profile-sidebar text-center">
+      <img class="profile-avatar" src="/uploads/profiles/<%= user.profile_image || 'default-profile.png' %>" alt="Profile picture" onerror="this.src='https://placehold.co/180x180?text=Profile'">
+      <h2><%= user.username %></h2><span class="role-badge"><%= user.role %></span>
+      <form class="mt-3" method="POST" action="/profile/image" enctype="multipart/form-data">
+        <input class="form-control form-control-sm mb-2" type="file" name="profileImage" accept="image/png,image/jpeg,image/webp" required>
+        <button class="btn btn-outline-brown btn-sm" type="submit">Upload Picture</button>
+      </form>
+    </div>
+    <div class="profile-content">
+      <h1>My Profile</h1>
+      <dl class="profile-details">
+        <div><dt>Email</dt><dd><%= user.email %></dd></div>
+        <div><dt>Address</dt><dd><%= user.address || 'Not added yet' %></dd></div>
+        <div><dt>Contact</dt><dd><%= user.contact || 'Not added yet' %></dd></div>
+        <div><dt>Member Since</dt><dd><%= user.created_at ? new Date(user.created_at).toLocaleDateString() : '-' %></dd></div>
+      </dl>
+      <div class="d-flex flex-wrap gap-2">
+        <a class="btn btn-brown" href="/profile/edit">Edit Profile</a>
+        <a class="btn btn-outline-brown" href="/profile/changePassword">Change Password</a>
+        <a class="btn btn-outline-brown" href="/profile/recipes">My Recipes</a>
+        <a class="btn btn-outline-brown" href="/profile/favourites">My Favourites</a>
+      </div>
+    </div>
+  </div>
+</div></main>
+<%- include('../partials/footer') %>
