@@ -28,9 +28,10 @@ function addRecipe(recipe, callback) {
             category,
             difficulty,
             cooking_time,
-            youtube_link
+            youtube_link,
+            image
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     db.query(sql, [
@@ -43,7 +44,8 @@ function addRecipe(recipe, callback) {
         recipe.category,
         recipe.difficulty,
         recipe.cooking_time,
-        recipe.youtube_link
+        recipe.youtube_link,
+        recipe.image
     ], callback);
 }
 

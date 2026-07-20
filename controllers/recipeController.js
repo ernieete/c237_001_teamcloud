@@ -9,6 +9,7 @@ exports.showRecipes = (req, res) => {
         }
 
         res.render("recipes/index", {
+            title: "Recipe List",
             recipes
         });
     });
@@ -16,7 +17,9 @@ exports.showRecipes = (req, res) => {
 
 // Show Add Recipe page
 exports.showAddRecipe = (req, res) => {
-    res.render("recipes/addRecipe");
+    res.render("recipes/addRecipe", {
+        title: "Add Recipe"
+    });
 };
 
 // Handle Add Recipe form submission
@@ -32,7 +35,8 @@ exports.addRecipe = (req, res) => {
         category: req.body.category,
         difficulty: req.body.difficulty,
         cooking_time: req.body.cooking_time,
-        youtube_link: req.body.youtube_link
+        youtube_link: req.body.youtube_link,
+        image: req.file.filename
     };
 
     recipeModel.addRecipe(recipe, (err) => {

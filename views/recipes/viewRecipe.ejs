@@ -21,6 +21,14 @@
             <%= recipe.title %>
         </h1>
 
+        <% if (recipe.image) { %>
+            <img
+                src="/uploads/<%= recipe.image %>"
+                alt="<%= recipe.title %>"
+                class="recipe-image"
+            >
+        <% } %>
+
     <div class="recipe-video">
 
         <h3>🎥 Video Tutorial</h3>
