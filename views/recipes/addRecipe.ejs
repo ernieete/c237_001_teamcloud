@@ -7,7 +7,7 @@
 
 <h1>Add Recipe</h1>
 
-<form action="/recipes/add" method="POST">
+<form action="/recipes/add" method="POST" enctype="multipart/form-data">
 
     <label>Title</label><br>
     <input
@@ -71,6 +71,26 @@
     <input
         type="number"
         name="cooking_time"
+        required
+    >
+
+    <br><br>
+
+    <label>YouTube Tutorial Link</label><br>
+
+    <input
+        type="url"
+        name="youtube_link"
+        placeholder="https://www.youtube.com/watch?v=..."
+        required
+    >
+
+    <label>Recipe Image</label><br>
+
+    <input
+        type="file"
+        name="image"
+        accept="image/*"
         required
     >
 

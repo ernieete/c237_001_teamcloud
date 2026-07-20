@@ -18,9 +18,19 @@ function addRecipe(recipe, callback) {
 
     const sql = `
         INSERT INTO recipes
-        (user_id, title, description, ingredients, instructions,
-         servings, category, difficulty, cooking_time)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (
+            user_id,
+            title,
+            description,
+            ingredients,
+            instructions,
+            servings,
+            category,
+            difficulty,
+            cooking_time,
+            youtube_link
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     db.query(sql, [
@@ -32,11 +42,28 @@ function addRecipe(recipe, callback) {
         recipe.servings,
         recipe.category,
         recipe.difficulty,
-        recipe.cooking_time
+        recipe.cooking_time,
+        recipe.youtube_link
     ], callback);
+}
+
+// Get a single recipe by ID
+function getRecipeById(id, callback) {
+
+    const sql = `
+        SELECT recipes.*, users.username
+        FROM recipes
+        JOIN users
+            ON recipes.user_id = users.id
+        WHERE recipes.id = ?
+    `;
+
+    db.query(sql, [id], callback);
+
 }
 
 module.exports = {
     getAllRecipes,
-    addRecipe
+    addRecipe,
+    getRecipeById
 };

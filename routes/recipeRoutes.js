@@ -6,6 +6,10 @@ const recipeController = require("../controllers/recipeController");
 // Display all recipes
 router.get("/", recipeController.showRecipes);
 
-router.get("/add", recipeController.showAddRecipe);
+router.get("/add", recipeController.showAddRecipe)
+
+router.post("/add", recipeController.addRecipe);
+
+router.get("/:id", recipeController.showRecipeDetails);
 
 module.exports = router;

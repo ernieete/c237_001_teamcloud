@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html>
 <head>
     <title>Recipe List</title>
@@ -33,6 +32,10 @@
 
             Cooking Time:
             <%= recipe.cooking_time %> mins
+
+            <br><br>
+            
+            <a href="/recipes/<%= recipe.id %>">View Recipe</a>
         </li>
 
         <hr>
