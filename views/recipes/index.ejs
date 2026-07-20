@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recipe List</title>
+</head>
+
+<body>
+
+<h1>Recipe List</h1>
+
+<% if (recipes.length === 0) { %>
+
+    <p>No recipes available.</p>
+
+<% } else { %>
+
+    <ul>
+
+    <% recipes.forEach(recipe => { %>
+
+        <li>
+            <strong><%= recipe.title %></strong><br>
+
+            Created by:
+            <%= recipe.username %><br>
+
+            Category:
+            <%= recipe.category %><br>
+
+            Difficulty:
+            <%= recipe.difficulty %><br>
+
+            Cooking Time:
+            <%= recipe.cooking_time %> mins
+        </li>
+
+        <hr>
+
+    <% }) %>
+
+    </ul>
+
+<% } %>
+
+</body>
+</html>
