@@ -1,5 +1,9 @@
 const db = require('../config/db');
+const adminModel = require('../models/adminModel');
 
+// ============================================================
+//  USER MANAGEMENT
+// ============================================================
 function listUsers(req, res) {
     const search = (req.query.search || '').trim();
     const pattern = `%${search}%`;
@@ -73,4 +77,104 @@ function deleteUser(req, res) {
     });
 }
 
-module.exports = { listUsers, viewUser, deleteUser };
+// ============================================================
+//  DASHBOARD + ANALYTICS
+// ============================================================
+function showDashboard(req, res) {
+    const data = {};
+    let remaining = 6;
+    let failed = false;
+
+    function done(err) {
+        if (failed) return;
+        if (err) {
+            failed = true;
+            console.error(err);
+            return res.status(500).render('error', {
+                title: 'Admin Error', message: 'Unable to load dashboard.'
+            });
+        }
+        remaining--;
+        if (remaining === 0) {
+            res.render('admin/dashboard', {
+                title: 'Admin Dashboard',
+                user: req.session.user,
+                currentUser: req.session.user,
+                totals: data.totals,
+                mostPopular: data.mostPopular,
+                highestRated: data.highestRated,
+                mostActiveUser: data.mostActiveUser,
+                mostUsedCategory: data.mostUsedCategory,
+                featured: data.featured
+            });
+        }
+    }
+
+    adminModel.getTotals((err, rows) => { if (!err) data.totals = rows[0]; done(err); });
+    adminModel.getMostPopularRecipe((err, rows) => { if (!err) data.mostPopular = rows[0] || null; done(err); });
+    adminModel.getHighestRatedRecipe((err, rows) => { if (!err) data.highestRated = rows[0] || null; done(err); });
+    adminModel.getMostActiveUser((err, rows) => { if (!err) data.mostActiveUser = rows[0] || null; done(err); });
+    adminModel.getMostUsedCategory((err, rows) => { if (!err) data.mostUsedCategory = rows[0] || null; done(err); });
+    adminModel.getFeaturedRecipes((err, rows) => { if (!err) data.featured = rows; done(err); });
+}
+
+// ============================================================
+//  RECIPE MANAGEMENT
+// ============================================================
+function showAdminRecipes(req, res) {
+    adminModel.getAllRecipesForAdmin((error, recipes) => {
+        if (error) {
+            console.error(error);
+            return res.status(500).render('error', {
+                title: 'Admin Error', message: 'Unable to load recipes.'
+            });
+        }
+        res.render('admin/recipes', {
+            title: 'Manage Recipes',
+            user: req.session.user,
+            currentUser: req.session.user,
+            recipes
+        });
+    });
+}
+
+function featureRecipe(req, res) {
+    adminModel.featureRecipe(req.params.id, (error) => {
+        if (error) {
+            console.error(error);
+            return res.status(500).render('error', { title: 'Admin Error', message: 'Unable to feature recipe.' });
+        }
+        res.redirect('/admin/recipes');
+    });
+}
+
+function unfeatureRecipe(req, res) {
+    adminModel.unfeatureRecipe(req.params.id, (error) => {
+        if (error) {
+            console.error(error);
+            return res.status(500).render('error', { title: 'Admin Error', message: 'Unable to unfeature recipe.' });
+        }
+        res.redirect('/admin/recipes');
+    });
+}
+
+function deleteRecipe(req, res) {
+    adminModel.deleteRecipe(req.params.id, (error) => {
+        if (error) {
+            console.error(error);
+            return res.status(500).render('error', { title: 'Admin Error', message: 'Unable to delete recipe.' });
+        }
+        res.redirect('/admin/recipes');
+    });
+}
+
+module.exports = {
+    listUsers,
+    viewUser,
+    deleteUser,
+    showDashboard,
+    showAdminRecipes,
+    featureRecipe,
+    unfeatureRecipe,
+    deleteRecipe
+};

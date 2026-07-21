@@ -1,0 +1,88 @@
+<%- include("../partials/header") %>
+<%- include("../partials/navbar") %>
+
+<main>
+    <section class="feature-section">
+        <div class="container">
+
+            <div class="section-heading">
+                <p class="section-label">ADMIN AREA</p>
+                <h2>Manage Recipes</h2>
+                <p>Feature, unfeature or remove any recipe.</p>
+            </div>
+
+            <div class="feature-card" style="padding: 20px;">
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Owner</th>
+                                <th>Category</th>
+                                <th class="text-center">❤️</th>
+                                <th class="text-center">⭐</th>
+                                <th class="text-center">Featured</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (recipes.length === 0) { %>
+                                <tr>
+                                    <td colspan="7" class="text-center">No recipes yet.</td>
+                                </tr>
+                            <% } %>
+
+                            <% recipes.forEach(recipe => { %>
+                                <tr>
+                                    <td>
+                                        <a href="/recipes/<%= recipe.id %>" style="color: var(--dark-brown); font-weight: 700;">
+                                            <%= recipe.title %>
+                                        </a>
+                                    </td>
+                                    <td><%= recipe.username %></td>
+                                    <td style="text-transform: capitalize;"><%= recipe.category %></td>
+                                    <td class="text-center"><%= recipe.favourite_count %></td>
+                                    <td class="text-center"><%= recipe.rating_count %></td>
+                                    <td class="text-center">
+                                        <% if (recipe.featured) { %>
+                                            <span class="hero-label" style="margin: 0;">Featured</span>
+                                        <% } else { %>
+                                            —
+                                        <% } %>
+                                    </td>
+                                    <td class="text-end">
+                                        <% if (recipe.featured) { %>
+                                            <form action="/admin/recipes/unfeature/<%= recipe.id %>" method="POST" style="display:inline;">
+                                                <button type="submit" class="btn btn-outline-brown btn-sm">Unfeature</button>
+                                            </form>
+                                        <% } else { %>
+                                            <form action="/admin/recipes/feature/<%= recipe.id %>" method="POST" style="display:inline;">
+                                                <button type="submit" class="btn btn-brown btn-sm">Feature</button>
+                                            </form>
+                                        <% } %>
+
+                                        <form action="/admin/recipes/delete/<%= recipe.id %>" method="POST"
+                                              style="display:inline;"
+                                              onsubmit="return confirm('Delete this recipe permanently?');">
+                                            <button type="submit" class="btn btn-sm"
+                                                    style="background:#b23b3b;color:#fff;border-radius:12px;font-weight:700;">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="text-center" style="margin-top: 40px;">
+                <a href="/admin/dashboard" class="btn btn-outline-brown">← Back to Dashboard</a>
+            </div>
+
+        </div>
+    </section>
+</main>
+
+<%- include("../partials/footer") %>
