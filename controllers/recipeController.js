@@ -12,7 +12,8 @@ exports.showRecipes = (req, res) => {
 
         res.render("recipes/index", {
             title: "Recipe List",
-            recipes
+            recipes,
+            user: req.session.user
         });
     });
 };
@@ -28,7 +29,7 @@ exports.showAddRecipe = (req, res) => {
 exports.addRecipe = (req, res) => {
 
     const recipe = {
-        user_id: 11, // Temporary until login/session is implemented
+        user_id: req.session.user.id,
         title: req.body.title,
         description: req.body.description,
         ingredients: req.body.ingredients,
@@ -182,9 +183,18 @@ exports.showEditRecipe = (req, res) => {
             return res.status(404).send("Recipe not found.");
         }
 
+        const recipe = results[0];
+
+        const isAdmin = req.session.user.role === "admin";
+        const isOwner = recipe.user_id === req.session.user.id;
+
+        if (!isAdmin && !isOwner) {
+            return res.status(403).send("Access denied.");
+        }
+
         res.render("recipes/editRecipe", {
             title: "Edit Recipe",
-            recipe: results[0]
+            recipe
         });
 
     });
@@ -208,6 +218,14 @@ exports.editRecipe = (req, res) => {
         }
 
         const existingRecipe = results[0];
+
+        // Check if the user is allowed to edit
+        const isAdmin = req.session.user.role === "admin";
+        const isOwner = existingRecipe.user_id === req.session.user.id;
+
+        if (!isAdmin && !isOwner) {
+            return res.status(403).send("Access denied.");
+        }
 
         const recipe = {
             title: req.body.title,
@@ -244,14 +262,37 @@ exports.deleteRecipe = (req, res) => {
 
     const recipeId = req.params.id;
 
-    recipeModel.deleteRecipe(recipeId, (err) => {
+    recipeModel.getRecipeForEdit(recipeId, (err, results) => {
 
         if (err) {
             console.error(err);
-            return res.status(500).send("Error deleting recipe.");
+            return res.status(500).send("Error retrieving recipe.");
         }
 
-        res.redirect("/recipes");
+        if (results.length === 0) {
+            return res.status(404).send("Recipe not found.");
+        }
+
+        const recipe = results[0];
+
+        // Check if the user is allowed to delete
+        const isAdmin = req.session.user.role === "admin";
+        const isOwner = recipe.user_id === req.session.user.id;
+
+        if (!isAdmin && !isOwner) {
+            return res.status(403).send("Access denied.");
+        }
+
+        recipeModel.deleteRecipe(recipeId, (err) => {
+
+            if (err) {
+                console.error(err);
+                return res.status(500).send("Error deleting recipe.");
+            }
+
+            res.redirect("/recipes");
+
+        });
 
     });
 
