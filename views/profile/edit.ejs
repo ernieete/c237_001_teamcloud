@@ -1,0 +1,14 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<main class="page-section"><div class="container"><div class="form-card mx-auto">
+  <h1>Edit Profile</h1>
+  <% if (error) { %><div class="alert alert-danger"><%= error %></div><% } %>
+  <form method="POST" action="/profile/edit">
+    <div class="mb-3"><label class="form-label">Username</label><input class="form-control" name="username" value="<%= user.username || '' %>" required></div>
+    <div class="mb-3"><label class="form-label">Email</label><input class="form-control" type="email" name="email" value="<%= user.email || '' %>" required></div>
+    <div class="mb-3"><label class="form-label">Address</label><input class="form-control" name="address" value="<%= user.address || '' %>"></div>
+    <div class="mb-4"><label class="form-label">Contact Number</label><input class="form-control" name="contact" value="<%= user.contact || '' %>"></div>
+    <div class="d-flex gap-2"><button class="btn btn-brown" type="submit">Save Changes</button><a class="btn btn-outline-brown" href="/profile">Cancel</a></div>
+  </form>
+</div></div></main>
+<%- include('../partials/footer') %>
