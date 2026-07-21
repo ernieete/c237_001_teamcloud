@@ -1,47 +1,111 @@
-<!DOCTYPE html>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Recipe List</title>
-</head>
+<%- include("../partials/header") %>
+<%- include("../partials/navbar") %>
 
-<body>
+<main class="recipe-container">
 
-<h1>Recipe List</h1>
+    <div class="section-heading">
 
-<% if (recipes.length === 0) { %>
+        <p class="section-label">
+            COMMUNITY RECIPES
+        </p>
 
-    <p>No recipes available.</p>
+        <h1 class="recipe-title">
+            Explore Homemade Recipes
+        </h1>
 
-<% } else { %>
+        <p>
+            Discover delicious recipes shared by our community.
+        </p>
 
-    <ul>
+    </div>
 
-    <% recipes.forEach(recipe => { %>
+    <% if (recipes.length === 0) { %>
 
-        <li>
-            <strong><%= recipe.title %></strong><br>
+        <div class="recipe-card">
+            <p>No recipes available.</p>
+        </div>
 
-            Created by:
-            <%= recipe.username %><br>
+    <% } else { %>
 
-            Category:
-            <%= recipe.category %><br>
+        <div class="recipe-grid">
 
-            Difficulty:
-            <%= recipe.difficulty %><br>
+            <% recipes.forEach(recipe => { %>
 
-            Cooking Time:
-            <%= recipe.cooking_time %> mins
-        </li>
+                <div class="recipe-card">
 
-        <hr>
+                    <% if (recipe.image) { %>
 
-    <% }) %>
+                        <img
+                            src="/uploads/<%= recipe.image %>"
+                            alt="<%= recipe.title %>"
+                            class="recipe-grid-image"
+                        >
 
-    </ul>
+                    <% } %>
 
-<% } %>
+                    <div class="recipe-card-content">
 
-</body>
-</html>
+                        <h2><%= recipe.title %></h2>
+
+                        <p class="recipe-author">
+                            By <strong><%= recipe.username %></strong>
+                        </p>
+
+                        <div class="recipe-badges">
+
+                            <span class="recipe-badge">
+                                🍴 <%= recipe.category %>
+                            </span>
+
+                            <span class="recipe-badge">
+                                ⭐ <%= recipe.difficulty %>
+                            </span>
+
+                            <span class="recipe-badge">
+                                ⏱ <%= recipe.cooking_time %> mins
+                            </span>
+
+                        </div>
+
+                        <a
+                            href="/recipes/<%= recipe.id %>"
+                            class="btn btn-brown w-100 mb-2"
+                        >
+                            View Recipe
+                        </a>
+
+                        <a
+                            href="/recipes/edit/<%= recipe.id %>"
+                            class="btn btn-outline-secondary w-100 mb-2"
+                        >
+                            ✏ Edit Recipe
+                        </a>
+
+                        <form
+                            action="/recipes/delete/<%= recipe.id %>"
+                            method="POST"
+                            onsubmit="return confirm('Are you sure you want to delete this recipe?');"
+                        >
+
+                            <button
+                                type="submit"
+                                class="btn btn-outline-danger w-100"
+                            >
+                                🗑 Delete Recipe
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            <% }) %>
+
+        </div>
+
+    <% } %>
+
+</main>
+
+<%- include("../partials/footer") %>

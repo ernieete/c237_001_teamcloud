@@ -72,25 +72,51 @@
 
             <div class="row g-4">
                 <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon">🔍</div>
-                        <h3>Discover Recipes</h3>
-                        <p>
-                            Search and filter recipes by category,
-                            difficulty, cooking time and rating.
-                        </p>
-                    </div>
+                    <a href="/recipes" class="feature-card-link">
+
+                        <div class="feature-card">
+
+                            <div class="feature-icon">🔍</div>
+
+                            <h3>Discover Recipes</h3>
+
+                            <p>
+                                Search and filter recipes by category,
+                                difficulty, cooking time and rating.
+                            </p>
+
+                        </div>
+
+                    </a>
                 </div>
 
                 <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon">📝</div>
-                        <h3>Share Your Cooking</h3>
-                        <p>
-                            Add ingredients, instructions and an
-                            image to share your homemade recipe.
-                        </p>
-                    </div>
+
+                    <% if (currentUser) { %>
+
+                        <a href="/recipes/add" class="feature-card-link">
+
+                    <% } else { %>
+
+                        <a href="/login" class="feature-card-link">
+
+                    <% } %>
+
+                            <div class="feature-card">
+
+                                <div class="feature-icon">📝</div>
+
+                                <h3>Share Your Cooking</h3>
+
+                                <p>
+                                    Add ingredients, instructions and an
+                                    image to share your homemade recipe.
+                                </p>
+
+                            </div>
+
+                        </a>
+
                 </div>
 
                 <div class="col-md-4">
@@ -110,48 +136,83 @@
     <section class="recipe-preview-section">
         <div class="container">
             <div class="section-heading">
-                <p class="section-label">COMING TOGETHER</p>
-                <h2>Featured community recipes</h2>
+                <p class="section-label">LATEST RECIPES</p>
+
+                <h2>Featured Community Recipes</h2>
 
                 <p>
-                    Recipes will appear here after your team
-                    implements recipe management.
+                    Browse some of the latest recipes shared by our community.
                 </p>
+
             </div>
 
             <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="placeholder-recipe-card">
-                        <div class="placeholder-image">🥞</div>
-                        <div class="placeholder-content">
-                            <span>Breakfast</span>
-                            <h3>Community Recipe</h3>
-                            <p>Recipe details will be loaded from MySQL.</p>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-md-4">
-                    <div class="placeholder-recipe-card">
-                        <div class="placeholder-image">🍝</div>
-                        <div class="placeholder-content">
-                            <span>Dinner</span>
-                            <h3>Community Recipe</h3>
-                            <p>Recipe details will be loaded from MySQL.</p>
-                        </div>
-                    </div>
-                </div>
+                <% if (recipes.length === 0) { %>
 
-                <div class="col-md-4">
-                    <div class="placeholder-recipe-card">
-                        <div class="placeholder-image">🍰</div>
-                        <div class="placeholder-content">
-                            <span>Dessert</span>
-                            <h3>Community Recipe</h3>
-                            <p>Recipe details will be loaded from MySQL.</p>
-                        </div>
+                    <div class="col-12 text-center">
+                        <p>No recipes available yet.</p>
                     </div>
-                </div>
+
+                <% } else { %>
+
+                    <% recipes.forEach(recipe => { %>
+
+                        <div class="col-md-4">
+
+                            <div class="homepage-recipe-card">
+
+                                <img
+                                    src="/uploads/<%= recipe.image %>"
+                                    alt="<%= recipe.title %>"
+                                    class="homepage-recipe-image"
+                                >
+
+                                <div class="homepage-content">
+
+                                    <span class="recipe-category">
+                                        <%= recipe.category %>
+                                    </span>
+
+                                    <h3 class="homepage-title">
+                                        <%= recipe.title %>
+                                    </h3>
+
+                                    <p class="homepage-author">
+                                        👤 By <strong><%= recipe.username %></strong>
+                                    </p>
+
+                                    <div class="homepage-info">
+
+                                        <span>
+                                            ⭐ <%= recipe.difficulty %>
+                                        </span>
+
+                                        <span>
+                                            ⏱ <%= recipe.cooking_time %> mins
+                                        </span>
+
+                                    </div>
+
+                                    <div class="mt-auto">
+                                        <a
+                                            href="/recipes/<%= recipe.id %>"
+                                            class="btn btn-brown w-100"
+                                        >
+                                            View Recipe
+                                        </a>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    <% }) %>
+
+                <% } %>
+
             </div>
 
             <div class="text-center mt-5">

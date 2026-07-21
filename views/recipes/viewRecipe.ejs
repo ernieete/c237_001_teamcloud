@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= recipe.title %></title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div class="recipe-container">
+
+    <div class="recipe-card">
+
+        <h1 class="recipe-title">
+            <%= recipe.title %>
+        </h1>
+
+        <% if (recipe.image) { %>
+            <img
+                src="/uploads/<%= recipe.image %>"
+                alt="<%= recipe.title %>"
+                class="recipe-image"
+            >
+        <% } %>
+
+    <div class="recipe-video">
+
+        <h3>🎥 Video Tutorial</h3>
+
+        <iframe
+            src="<%= recipe.youtube_link.replace('watch?v=', 'embed/') %>"
+            title="Recipe Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+        </iframe>
+
+    </div>
+
+    <hr>
+
+    <div class="recipe-meta">
+        <strong>Created by:</strong> <%= recipe.username %>
+    </div>
+
+    <div class="recipe-section">
+        <h3>Description</h3>
+        <p><%= recipe.description %></p>
+    </div>
+
+    <div class="recipe-section">
+
+        <h3>🥣 Ingredients</h3>
+
+        <%
+            const ingredients = recipe.ingredients.split(",");
+        %>
+
+        <ul class="ingredient-list">
+
+            <% ingredients.forEach(item => { %>
+
+                <li><%= item.trim() %></li>
+
+            <% }) %>
+
+        </ul>
+
+    </div>
+
+    <div class="recipe-section">
+        <h3>Instructions</h3>
+
+        <%
+            const formattedInstructions = recipe.instructions.replace(
+                /(\d+\.)/g,
+                "<br><br>$1"
+            );
+        %>
+
+        <p>
+            <%- formattedInstructions.replace(/^<br><br>/, "") %>
+        </p>
+    </div>
+
+    <div class="recipe-badges">
+
+        <span class="recipe-badge">
+            🍽 <%= recipe.servings %> Servings
+        </span>
+
+        <span class="recipe-badge">
+            🍛 <%= recipe.category %>
+        </span>
+
+        <span class="recipe-badge">
+            ⭐ <%= recipe.difficulty %>
+        </span>
+
+        <span class="recipe-badge">
+            ⏱ <%= recipe.cooking_time %> mins
+        </span>
+
+    </div>
+
+    <br>
+
+    <a href="/recipes" class="recipe-back">
+        ← Back to Recipe List
+    </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

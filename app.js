@@ -14,6 +14,7 @@ const searchRoutes = require("./routes/searchRoutes");
 const ratingRoutes = require("./routes/ratingRoutes");
 const commentRoutes = require("./routes/commentRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const recipeModel = require("./models/recipeModel");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -43,9 +44,25 @@ app.use((req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-    res.render("home", {
-        title: "Simply Homemade"
+
+    recipeModel.getAllRecipes((err, recipes) => {
+
+        if (err) {
+            console.error(err);
+
+            return res.render("home", {
+                title: "Simply Homemade",
+                recipes: []
+            });
+        }
+
+        res.render("home", {
+            title: "Simply Homemade",
+            recipes: recipes.slice(0, 3)
+        });
+
     });
+
 });
 
 app.use("/", authRoutes);
