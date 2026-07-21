@@ -20,6 +20,45 @@ const adminRoutes = require("./routes/adminRoutes");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Creates the correct public URL for recipe images.
+// Handles filenames such as:
+// kimchi-fried-rice.jpg
+// uploads/kimchi-fried-rice.jpg
+// /uploads/kimchi-fried-rice.jpg
+app.locals.getRecipeImagePath = (image) => {
+    if (!image) {
+        return "/images/default-recipe.png";
+    }
+
+    const cleanImage = String(image)
+        .replace(/\\/g, "/")
+        .replace(/^\.\//, "");
+
+    // Allow external image URLs
+    if (/^https?:\/\//i.test(cleanImage)) {
+        return cleanImage;
+    }
+
+    // Already begins with a public path
+    if (
+        cleanImage.startsWith("/uploads/") ||
+        cleanImage.startsWith("/images/")
+    ) {
+        return cleanImage;
+    }
+
+    // Missing only the first slash
+    if (
+        cleanImage.startsWith("uploads/") ||
+        cleanImage.startsWith("images/")
+    ) {
+        return `/${cleanImage}`;
+    }
+
+    // Database contains only the filename
+    return `/uploads/${cleanImage}`;
+};
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
