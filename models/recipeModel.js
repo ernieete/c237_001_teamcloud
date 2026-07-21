@@ -64,8 +64,71 @@ function getRecipeById(id, callback) {
 
 }
 
+// Get recipe for editing
+function getRecipeForEdit(id, callback) {
+
+    const sql = `
+        SELECT *
+        FROM recipes
+        WHERE id = ?
+    `;
+
+    db.query(sql, [id], callback);
+
+}
+
+// Update recipe
+function updateRecipe(id, recipe, callback) {
+
+    const sql = `
+        UPDATE recipes
+        SET
+            title = ?,
+            description = ?,
+            ingredients = ?,
+            instructions = ?,
+            servings = ?,
+            category = ?,
+            difficulty = ?,
+            cooking_time = ?,
+            youtube_link = ?,
+            image = ?
+        WHERE id = ?
+    `;
+
+    db.query(sql, [
+        recipe.title,
+        recipe.description,
+        recipe.ingredients,
+        recipe.instructions,
+        recipe.servings,
+        recipe.category,
+        recipe.difficulty,
+        recipe.cooking_time,
+        recipe.youtube_link,
+        recipe.image,
+        id
+    ], callback);
+
+}
+
+// Delete recipe
+function deleteRecipe(id, callback) {
+
+    const sql = `
+        DELETE FROM recipes
+        WHERE id = ?
+    `;
+
+    db.query(sql, [id], callback);
+
+}
+
 module.exports = {
     getAllRecipes,
     addRecipe,
-    getRecipeById
+    getRecipeById,
+    getRecipeForEdit,
+    updateRecipe,
+    deleteRecipe
 };

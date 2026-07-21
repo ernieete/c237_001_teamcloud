@@ -74,3 +74,94 @@ exports.showRecipeDetails = (req, res) => {
     });
 
 };
+
+// Show Edit Recipe page
+exports.showEditRecipe = (req, res) => {
+
+    const recipeId = req.params.id;
+
+    recipeModel.getRecipeForEdit(recipeId, (err, results) => {
+
+        if (err) {
+            console.error(err);
+            return res.status(500).send("Error retrieving recipe.");
+        }
+
+        if (results.length === 0) {
+            return res.status(404).send("Recipe not found.");
+        }
+
+        res.render("recipes/editRecipe", {
+            title: "Edit Recipe",
+            recipe: results[0]
+        });
+
+    });
+
+};
+
+// Handle Edit Recipe form submission
+exports.editRecipe = (req, res) => {
+
+    const recipeId = req.params.id;
+
+    recipeModel.getRecipeForEdit(recipeId, (err, results) => {
+
+        if (err) {
+            console.error(err);
+            return res.status(500).send("Error retrieving recipe.");
+        }
+
+        if (results.length === 0) {
+            return res.status(404).send("Recipe not found.");
+        }
+
+        const existingRecipe = results[0];
+
+        const recipe = {
+            title: req.body.title,
+            description: req.body.description,
+            ingredients: req.body.ingredients,
+            instructions: req.body.instructions,
+            servings: req.body.servings,
+            category: req.body.category,
+            difficulty: req.body.difficulty,
+            cooking_time: req.body.cooking_time,
+            youtube_link: req.body.youtube_link,
+
+            // Keep existing image if no new one is uploaded
+            image: req.file ? req.file.filename : existingRecipe.image
+        };
+
+        recipeModel.updateRecipe(recipeId, recipe, (err) => {
+
+            if (err) {
+                console.error(err);
+                return res.status(500).send("Error updating recipe.");
+            }
+
+            res.redirect("/recipes");
+
+        });
+
+    });
+
+};
+
+// Delete Recipe
+exports.deleteRecipe = (req, res) => {
+
+    const recipeId = req.params.id;
+
+    recipeModel.deleteRecipe(recipeId, (err) => {
+
+        if (err) {
+            console.error(err);
+            return res.status(500).send("Error deleting recipe.");
+        }
+
+        res.redirect("/recipes");
+
+    });
+
+};

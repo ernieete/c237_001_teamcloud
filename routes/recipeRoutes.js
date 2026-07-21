@@ -17,6 +17,25 @@ router.post(
     recipeController.addRecipe
 );
 
+// Show Edit Recipe page
+router.get(
+    "/edit/:id",
+    recipeController.showEditRecipe
+);
+
+// Handle Edit Recipe
+router.post(
+    "/edit/:id",
+    upload.single("image"),
+    recipeController.editRecipe
+);
+
+// Delete Recipe
+router.post(
+    "/delete/:id",
+    recipeController.deleteRecipe
+);
+
 // Display a single recipe
 router.get("/:id", recipeController.showRecipeDetails);
 

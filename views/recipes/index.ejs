@@ -69,10 +69,32 @@
 
                         <a
                             href="/recipes/<%= recipe.id %>"
-                            class="btn btn-brown w-100"
+                            class="btn btn-brown w-100 mb-2"
                         >
                             View Recipe
                         </a>
+
+                        <a
+                            href="/recipes/edit/<%= recipe.id %>"
+                            class="btn btn-outline-secondary w-100 mb-2"
+                        >
+                            ✏ Edit Recipe
+                        </a>
+
+                        <form
+                            action="/recipes/delete/<%= recipe.id %>"
+                            method="POST"
+                            onsubmit="return confirm('Are you sure you want to delete this recipe?');"
+                        >
+
+                            <button
+                                type="submit"
+                                class="btn btn-outline-danger w-100"
+                            >
+                                🗑 Delete Recipe
+                            </button>
+
+                        </form>
 
                     </div>
 

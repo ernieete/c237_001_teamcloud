@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Recipe</title>
+</head>
+<body>
+
+<h1>Edit Recipe</h1>
+
+<form action="/recipes/edit/<%= recipe.id %>" method="POST" enctype="multipart/form-data">
+
+    <label>Title</label><br>
+    <input
+        type="text"
+        name="title"
+        value="<%= recipe.title %>"
+        required
+    ><br><br>
+
+    <label>Description</label><br>
+    <textarea
+        name="description"
+    ><%= recipe.description %></textarea><br><br>
+
+    <label>Ingredients</label><br>
+    <textarea
+        name="ingredients"
+        required
+    ><%= recipe.ingredients %></textarea><br><br>
+
+    <label>Instructions</label><br>
+    <textarea
+        name="instructions"
+        required
+    ><%= recipe.instructions %></textarea><br><br>
+
+    <label>Servings</label><br>
+    <input
+        type="number"
+        name="servings"
+        value="<%= recipe.servings %>"
+    ><br><br>
+
+    <label>Category</label><br>
+
+    <select name="category">
+
+        <option value="breakfast" <%= recipe.category === "breakfast" ? "selected" : "" %>>Breakfast</option>
+
+        <option value="lunch" <%= recipe.category === "lunch" ? "selected" : "" %>>Lunch</option>
+
+        <option value="dinner" <%= recipe.category === "dinner" ? "selected" : "" %>>Dinner</option>
+
+        <option value="dessert" <%= recipe.category === "dessert" ? "selected" : "" %>>Dessert</option>
+
+        <option value="drinks" <%= recipe.category === "drinks" ? "selected" : "" %>>Drinks</option>
+
+        <option value="snacks" <%= recipe.category === "snacks" ? "selected" : "" %>>Snacks</option>
+
+    </select>
+
+    <br><br>
+
+    <label>Difficulty</label><br>
+
+    <select name="difficulty">
+
+        <option value="easy" <%= recipe.difficulty === "easy" ? "selected" : "" %>>Easy</option>
+
+        <option value="medium" <%= recipe.difficulty === "medium" ? "selected" : "" %>>Medium</option>
+
+        <option value="hard" <%= recipe.difficulty === "hard" ? "selected" : "" %>>Hard</option>
+
+    </select>
+
+    <br><br>
+
+    <label>Cooking Time (minutes)</label><br>
+
+    <input
+        type="number"
+        name="cooking_time"
+        value="<%= recipe.cooking_time %>"
+        required
+    >
+
+    <br><br>
+
+    <label>YouTube Tutorial Link</label><br>
+
+    <input
+        type="url"
+        name="youtube_link"
+        value="<%= recipe.youtube_link %>"
+        placeholder="https://www.youtube.com/watch?v=..."
+        
+    >
+
+    <br><br>
+
+    <label>Recipe Image</label><br>
+
+    <p>Current Image:</p>
+
+    <img
+        src="/uploads/<%= recipe.image %>"
+        alt="<%= recipe.title %>"
+        width="200"
+    >
+
+    <br><br>
+
+    <input
+        type="file"
+        name="image"
+        accept="image/*"
+    >
+
+    <br><br>
+
+    <button type="submit">
+
+        Update Recipe
+
+    </button>
+
+</form>
+
+</body>
+</html>
