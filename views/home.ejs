@@ -107,51 +107,72 @@
         </div>
     </section>
 
+    <!-- SEARCH + FILTER BAR (Oliver's part) -->
+    <section class="search-discovery-bar">
+        <div class="container">
+            <%- include("partials/search-filter-bar", { query: "" }) %>
+        </div>
+    </section>
+
+    <!-- FEATURED RECIPES (Oliver's part) -->
     <section class="recipe-preview-section">
         <div class="container">
             <div class="section-heading">
-                <p class="section-label">COMING TOGETHER</p>
-                <h2>Featured community recipes</h2>
-
-                <p>
-                    Recipes will appear here after your team
-                    implements recipe management.
-                </p>
+                <p class="section-label">TOP RATED</p>
+                <h2>Featured Recipes</h2>
             </div>
 
             <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="placeholder-recipe-card">
-                        <div class="placeholder-image">🥞</div>
-                        <div class="placeholder-content">
-                            <span>Breakfast</span>
-                            <h3>Community Recipe</h3>
-                            <p>Recipe details will be loaded from MySQL.</p>
-                        </div>
+                <% if (featured.length === 0) { %>
+                    <p class="text-center">No featured recipes yet.</p>
+                <% } %>
+                <% featured.forEach(recipe => { %>
+                    <div class="col-md-4">
+                        <%- include("partials/recipe-card", { recipe }) %>
                     </div>
-                </div>
+                <% }) %>
+            </div>
+        </div>
+    </section>
 
-                <div class="col-md-4">
-                    <div class="placeholder-recipe-card">
-                        <div class="placeholder-image">🍝</div>
-                        <div class="placeholder-content">
-                            <span>Dinner</span>
-                            <h3>Community Recipe</h3>
-                            <p>Recipe details will be loaded from MySQL.</p>
-                        </div>
-                    </div>
-                </div>
+    <!-- LATEST RECIPES (Oliver's part) -->
+    <section class="recipe-preview-section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="section-label">JUST ADDED</p>
+                <h2>Latest Recipes</h2>
+            </div>
 
-                <div class="col-md-4">
-                    <div class="placeholder-recipe-card">
-                        <div class="placeholder-image">🍰</div>
-                        <div class="placeholder-content">
-                            <span>Dessert</span>
-                            <h3>Community Recipe</h3>
-                            <p>Recipe details will be loaded from MySQL.</p>
-                        </div>
+            <div class="row g-4">
+                <% if (latest.length === 0) { %>
+                    <p class="text-center">No recipes yet — be the first to add one!</p>
+                <% } %>
+                <% latest.forEach(recipe => { %>
+                    <div class="col-md-4">
+                        <%- include("partials/recipe-card", { recipe }) %>
                     </div>
-                </div>
+                <% }) %>
+            </div>
+        </div>
+    </section>
+
+    <!-- POPULAR RECIPES (Oliver's part) -->
+    <section class="recipe-preview-section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="section-label">COMMUNITY FAVOURITES</p>
+                <h2>Popular Recipes</h2>
+            </div>
+
+            <div class="row g-4">
+                <% if (popular.length === 0) { %>
+                    <p class="text-center">No popular recipes yet.</p>
+                <% } %>
+                <% popular.forEach(recipe => { %>
+                    <div class="col-md-4">
+                        <%- include("partials/recipe-card", { recipe }) %>
+                    </div>
+                <% }) %>
             </div>
 
             <div class="text-center mt-5">

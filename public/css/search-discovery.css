@@ -1,0 +1,25 @@
+/* Search + filter bar sits in its own section above the recipe rows */
+.search-discovery-bar {
+  padding: 1.5rem 0;
+}
+
+.search-filter-bar select {
+  min-width: 130px;
+}
+
+/* Real photo variant of the existing .placeholder-image emoji block */
+.placeholder-image-photo {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+}
+
+.placeholder-recipe-card h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.placeholder-recipe-card h3 a:hover {
+  text-decoration: underline;
+}

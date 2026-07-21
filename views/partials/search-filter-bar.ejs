@@ -1,0 +1,63 @@
+<div class="row g-3 align-items-center search-filter-bar">
+
+    <!-- Search box -->
+    <div class="col-lg-5">
+        <form action="/search" method="GET" class="d-flex gap-2">
+            <input
+                type="text"
+                name="q"
+                class="form-control"
+                placeholder="Search by recipe name or ingredient..."
+                value="<%= typeof query !== 'undefined' ? query : '' %>"
+            >
+            <button type="submit" class="btn btn-brown">Search</button>
+        </form>
+    </div>
+
+    <!-- Filter + sort -->
+    <div class="col-lg-7">
+        <form action="/filter" method="GET" class="d-flex flex-wrap gap-2">
+            <select name="category" class="form-select">
+                <option value="">All Categories</option>
+                <option value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinner</option>
+                <option value="dessert">Dessert</option>
+                <option value="drinks">Drinks</option>
+                <option value="snacks">Snacks</option>
+            </select>
+
+            <select name="difficulty" class="form-select">
+                <option value="">All Difficulties</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+
+            <select name="cookTime" class="form-select">
+                <option value="">Any Cooking Time</option>
+                <option value="15">Under 15 mins</option>
+                <option value="30">Under 30 mins</option>
+                <option value="60">Under 1 hour</option>
+            </select>
+
+            <select name="minRating" class="form-select">
+                <option value="">Any Rating</option>
+                <option value="4">4+ stars</option>
+                <option value="3">3+ stars</option>
+                <option value="2">2+ stars</option>
+            </select>
+
+            <select name="sort" class="form-select">
+                <option value="newest">Newest</option>
+                <option value="oldest">Oldest</option>
+                <option value="most_favourited">Most Favourited</option>
+                <option value="alphabetical">Alphabetical</option>
+            </select>
+
+            <button type="submit" class="btn btn-light-custom">Apply</button>
+        </form>
+    </div>
+
+</div>
+
