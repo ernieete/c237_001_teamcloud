@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const recipeController = require("../controllers/recipeController");
-const upload = require("../middleware/uploadMiddleware");
+const { uploadRecipeImage } = require("../middleware/uploadMiddleware");
 
 // Display all recipes
 router.get("/", recipeController.showRecipes);
@@ -13,7 +13,7 @@ router.get("/add", recipeController.showAddRecipe);
 // Handle Add Recipe form
 router.post(
     "/add",
-    upload.single("image"),
+    uploadRecipeImage.single("image"),
     recipeController.addRecipe
 );
 
@@ -26,7 +26,7 @@ router.get(
 // Handle Edit Recipe
 router.post(
     "/edit/:id",
-    upload.single("image"),
+    uploadRecipeImage.single("image"),
     recipeController.editRecipe
 );
 

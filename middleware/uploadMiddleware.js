@@ -1,22 +1,55 @@
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 
-// Configure where uploaded images are stored
-const storage = multer.diskStorage({
+/* ---------- Recipe Images ---------- */
+
+const recipeStorage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "public/uploads/");
     },
-
     filename: (req, file, cb) => {
-        const uniqueName =
-            Date.now() + path.extname(file.originalname);
-
-        cb(null, uniqueName);
+        cb(null, Date.now() + path.extname(file.originalname));
     }
 });
 
-const upload = multer({
-    storage: storage
+const uploadRecipeImage = multer({
+    storage: recipeStorage
 });
 
-module.exports = upload;
+
+/* ---------- Profile Images ---------- */
+
+const profileDirectory = path.join(
+    __dirname,
+    "..",
+    "public",
+    "uploads",
+    "profiles"
+);
+
+fs.mkdirSync(profileDirectory, { recursive: true });
+
+const profileStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, profileDirectory);
+    },
+    filename: (req, file, cb) => {
+        const extension = path.extname(file.originalname).toLowerCase();
+
+        cb(
+            null,
+            `profile-${req.session.user.id}-${Date.now()}${extension}`
+        );
+    }
+});
+
+const uploadProfileImage = multer({
+    storage: profileStorage
+});
+
+
+module.exports = {
+    uploadRecipeImage,
+    uploadProfileImage
+};
