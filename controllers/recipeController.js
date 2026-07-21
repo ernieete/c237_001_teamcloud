@@ -1,4 +1,6 @@
 const recipeModel = require("../models/recipeModel");
+const ratingModel = require("../models/ratingModel");
+const commentModel = require("../models/commentModel");
 
 // Display all recipes
 exports.showRecipes = (req, res) => {
@@ -54,26 +56,115 @@ exports.addRecipe = (req, res) => {
 
 // Display a single recipe
 exports.showRecipeDetails = (req, res) => {
-
     const recipeId = req.params.id;
 
-    recipeModel.getRecipeById(recipeId, (err, results) => {
+    recipeModel.getRecipeById(
+        recipeId,
+        (err, results) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).send("Error retrieving recipe.");
+            }
 
-        if (err) {
-            console.error(err);
-            return res.status(500).send("Error retrieving recipe.");
+            if (results.length === 0) {
+                return res.status(404).send("Recipe not found.");
+            }
+
+            const recipe = results[0];
+
+            // Get average rating
+            ratingModel.getAverageRating(
+                recipeId,
+                (err, ratingResults) => {
+                    if (err) {
+                        console.error(err);
+                        return res.status(500).send("Error retrieving rating.");
+                    }
+
+                    // Get rating breakdown
+                    ratingModel.getRatingBreakdown(
+                        recipeId,
+                        (err, breakdown) => {
+                            if (err) {
+                                console.error(err);
+                                return res.status(500).send(
+                                    "Error retrieving rating breakdown."
+                                );
+                            }
+
+                            // Get comments
+                            commentModel.getCommentsByRecipe(
+                                recipeId,
+                                (err, comments) => {
+                                    if (err) {
+                                        console.error(err);
+                                        return res.status(500).send(
+                                            "Error retrieving comments."
+                                        );
+                                    }
+
+                                    let userRating = null;
+
+                                    // If logged in, get their rating
+                                    if (req.session.user) {
+                                        ratingModel.getUserRating(
+                                            req.session.user.id,
+                                            recipeId,
+                                            (err, userRatingResults) => {
+                                                if (err) {
+                                                    console.error(err);
+                                                    return res.status(500).send(
+                                                        "Error retrieving user rating."
+                                                    );
+                                                }
+
+                                                if (userRatingResults.length > 0) {
+                                                    userRating =
+                                                        userRatingResults[0].rating;
+                                                }
+
+                                                res.render(
+                                                    "recipes/viewRecipe",
+                                                    {
+                                                        title: recipe.title,
+                                                        recipe,
+                                                        averageRating:
+                                                            ratingResults[0].averageRating || 0,
+                                                        totalRatings:
+                                                            ratingResults[0].totalRatings || 0,
+                                                        ratingBreakdown:
+                                                            breakdown,
+                                                        userRating,
+                                                        comments
+                                                    }
+                                                );
+                                            }
+                                        );
+                                    } else {
+                                        res.render(
+                                            "recipes/viewRecipe",
+                                            {
+                                                title: recipe.title,
+                                                recipe,
+                                                averageRating:
+                                                    ratingResults[0].averageRating || 0,
+                                                totalRatings:
+                                                    ratingResults[0].totalRatings || 0,
+                                                ratingBreakdown:
+                                                    breakdown,
+                                                userRating: null,
+                                                comments
+                                            }
+                                        );
+                                    }
+                                }
+                            );
+                        }
+                    );
+                }
+            );
         }
-
-        if (results.length === 0) {
-            return res.status(404).send("Recipe not found.");
-        }
-
-        res.render("recipes/viewRecipe", {
-            recipe: results[0]
-        });
-
-    });
-
+    );
 };
 
 // Show Edit Recipe page
