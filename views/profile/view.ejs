@@ -23,7 +23,7 @@
                 <div class="profile-image-section">
                     <img
                         class="profile-avatar"
-                        src="<%= user.profile_image
+                        src="<%= user.profile_image && user.profile_image !== 'default-profile.png'
                             ? '/uploads/profiles/' + user.profile_image
                             : '/images/default-profile.png' %>"
                         alt="<%= user.username %>'s profile picture"
