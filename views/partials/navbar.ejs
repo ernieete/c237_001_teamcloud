@@ -36,6 +36,14 @@
                         Favourites
                     </a>
                 </li>
+
+                <% if (currentUser) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile/recipes">
+                            My Recipes
+                        </a>
+                    </li>
+                <% } %>
             </ul>
 
             <div class="d-flex gap-2">

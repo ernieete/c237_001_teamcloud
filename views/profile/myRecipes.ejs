@@ -1,9 +1,122 @@
-<%- include('../partials/header') %>
-<%- include('../partials/navbar') %>
-<main class="page-section"><div class="container">
-  <div class="page-heading-row"><div><h1>My Recipes</h1><p>Recipes created using your account.</p></div><a class="btn btn-brown" href="/recipes/add">Add Recipe</a></div>
-  <% if (!recipes.length) { %><div class="empty-card"><h3>No recipes yet</h3><p>Your recipes will appear here after you create one.</p></div><% } else { %>
-    <div class="row g-4"><% recipes.forEach(recipe => { %><div class="col-md-6 col-lg-4"><div class="simple-recipe-card"><h3><%= recipe.title %></h3><p><%= recipe.description || 'No description.' %></p><a href="/recipes/<%= recipe.id %>">View recipe</a></div></div><% }) %></div>
-  <% } %>
-</div></main>
-<%- include('../partials/footer') %>
+<%- include("../partials/header") %>
+<%- include("../partials/navbar") %>
+
+<main class="recipe-container">
+
+    <div class="section-heading">
+
+        <p class="section-label">
+            MY RECIPES
+        </p>
+
+        <h1 class="recipe-title">
+            Manage Your Recipes
+        </h1>
+
+        <p>
+            View, edit and manage all the recipes you've shared.
+        </p>
+
+        <a
+            href="/recipes/add"
+            class="btn btn-brown mt-3"
+        >
+            ➕ Add New Recipe
+        </a>
+
+    </div>
+
+    <% if (recipes.length === 0) { %>
+
+        <div class="recipe-card">
+            <h3>No recipes yet 🍳</h3>
+            <p>Create your first recipe and start sharing!</p>
+
+            <a
+                href="/recipes/add"
+                class="btn btn-brown"
+            >
+                Add Your First Recipe
+            </a>
+        </div>
+
+    <% } else { %>
+
+        <div class="recipe-grid">
+
+            <% recipes.forEach(recipe => { %>
+
+                <div class="recipe-card">
+
+                    <% if (recipe.image) { %>
+
+                        <img
+                            src="/uploads/<%= recipe.image %>"
+                            alt="<%= recipe.title %>"
+                            class="recipe-grid-image"
+                        >
+
+                    <% } %>
+
+                    <div class="recipe-card-content">
+
+                        <h2><%= recipe.title %></h2>
+
+                        <div class="recipe-badges">
+
+                            <span class="recipe-badge">
+                                🍴 <%= recipe.category %>
+                            </span>
+
+                            <span class="recipe-badge">
+                                ⭐ <%= recipe.difficulty %>
+                            </span>
+
+                            <span class="recipe-badge">
+                                ⏱ <%= recipe.cooking_time %> mins
+                            </span>
+
+                        </div>
+
+                        <a
+                            href="/recipes/<%= recipe.id %>"
+                            class="btn btn-brown w-100 mb-2"
+                        >
+                            👁 View Recipe
+                        </a>
+
+                        <a
+                            href="/recipes/edit/<%= recipe.id %>"
+                            class="btn btn-outline-secondary w-100 mb-2"
+                        >
+                            ✏ Edit Recipe
+                        </a>
+
+                        <form
+                            action="/recipes/delete/<%= recipe.id %>"
+                            method="POST"
+                            onsubmit="return confirm('Are you sure you want to delete this recipe?');"
+                        >
+
+                            <button
+                                type="submit"
+                                class="btn btn-outline-danger w-100"
+                            >
+                                🗑 Delete Recipe
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            <% }) %>
+
+        </div>
+
+    <% } %>
+
+</main>
+
+<%- include("../partials/footer") %>
