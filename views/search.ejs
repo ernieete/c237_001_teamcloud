@@ -1,0 +1,32 @@
+<%- include("partials/header") %>
+<%- include("partials/navbar") %>
+
+<main>
+    <section class="search-discovery-bar">
+        <div class="container">
+            <%- include("partials/search-filter-bar", { query: query }) %>
+        </div>
+    </section>
+
+    <section class="recipe-preview-section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="section-label">SEARCH</p>
+                <h2><%= query ? `Results for "${query}"` : "Search Recipes" %></h2>
+            </div>
+
+            <div class="row g-4">
+                <% if (query && results.length === 0) { %>
+                    <p class="text-center">No recipes found matching "<%= query %>". Try a different name or ingredient.</p>
+                <% } %>
+                <% results.forEach(recipe => { %>
+                    <div class="col-md-4">
+                        <%- include("partials/recipe-card", { recipe }) %>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </section>
+</main>
+
+<%- include("partials/footer") %>

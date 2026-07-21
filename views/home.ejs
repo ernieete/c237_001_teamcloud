@@ -147,86 +147,72 @@
         </div>
     </section>
 
+    <!-- SEARCH + FILTER BAR (Oliver's part) -->
+    <section class="search-discovery-bar">
+        <div class="container">
+            <%- include("partials/search-filter-bar", { query: "" }) %>
+        </div>
+    </section>
+
+    <!-- FEATURED RECIPES (Oliver's part) -->
     <section class="recipe-preview-section">
         <div class="container">
             <div class="section-heading">
-                <p class="section-label">LATEST RECIPES</p>
-
-                <h2>Featured Community Recipes</h2>
-
-                <p>
-                    Browse some of the latest recipes shared by our community.
-                </p>
-
+                <p class="section-label">TOP RATED</p>
+                <h2>Featured Recipes</h2>
             </div>
 
             <div class="row g-4">
-
-                <% if (recipes.length === 0) { %>
-
-                    <div class="col-12 text-center">
-                        <p>No recipes available yet.</p>
-                    </div>
-
-                <% } else { %>
-
-                    <% recipes.forEach(recipe => { %>
-
-                        <div class="col-md-4">
-
-                            <div class="homepage-recipe-card">
-
-                                <img
-                                    src="/uploads/<%= recipe.image %>"
-                                    alt="<%= recipe.title %>"
-                                    class="homepage-recipe-image"
-                                >
-
-                                <div class="homepage-content">
-
-                                    <span class="recipe-category">
-                                        <%= recipe.category %>
-                                    </span>
-
-                                    <h3 class="homepage-title">
-                                        <%= recipe.title %>
-                                    </h3>
-
-                                    <p class="homepage-author">
-                                        👤 By <strong><%= recipe.username %></strong>
-                                    </p>
-
-                                    <div class="homepage-info">
-
-                                        <span>
-                                            ⭐ <%= recipe.difficulty %>
-                                        </span>
-
-                                        <span>
-                                            ⏱ <%= recipe.cooking_time %> mins
-                                        </span>
-
-                                    </div>
-
-                                    <div class="mt-auto">
-                                        <a
-                                            href="/recipes/<%= recipe.id %>"
-                                            class="btn btn-brown w-100"
-                                        >
-                                            View Recipe
-                                        </a>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    <% }) %>
-
+                <% if (featured.length === 0) { %>
+                    <p class="text-center">No featured recipes yet.</p>
                 <% } %>
+                <% featured.forEach(recipe => { %>
+                    <div class="col-md-4">
+                        <%- include("partials/recipe-card", { recipe }) %>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </section>
 
+    <!-- LATEST RECIPES (Oliver's part) -->
+    <section class="recipe-preview-section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="section-label">JUST ADDED</p>
+                <h2>Latest Recipes</h2>
+            </div>
+
+            <div class="row g-4">
+                <% if (latest.length === 0) { %>
+                    <p class="text-center">No recipes yet — be the first to add one!</p>
+                <% } %>
+                <% latest.forEach(recipe => { %>
+                    <div class="col-md-4">
+                        <%- include("partials/recipe-card", { recipe }) %>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </section>
+
+    <!-- POPULAR RECIPES (Oliver's part) -->
+    <section class="recipe-preview-section">
+        <div class="container">
+            <div class="section-heading">
+                <p class="section-label">COMMUNITY FAVOURITES</p>
+                <h2>Popular Recipes</h2>
+            </div>
+
+            <div class="row g-4">
+                <% if (popular.length === 0) { %>
+                    <p class="text-center">No popular recipes yet.</p>
+                <% } %>
+                <% popular.forEach(recipe => { %>
+                    <div class="col-md-4">
+                        <%- include("partials/recipe-card", { recipe }) %>
+                    </div>
+                <% }) %>
             </div>
 
             <div class="text-center mt-5">

@@ -1,0 +1,16 @@
+<div class="placeholder-recipe-card">
+    <% if (recipe.image) { %>
+        <img src="<%= recipe.image %>" alt="<%= recipe.title %>" class="placeholder-image-photo">
+    <% } else { %>
+        <div class="placeholder-image">🍽️</div>
+    <% } %>
+
+    <div class="placeholder-content">
+        <span><%= recipe.category %></span>
+        <h3><a href="/recipes/<%= recipe.id %>"><%= recipe.title %></a></h3>
+        <p>
+            <%= recipe.difficulty %> · <%= recipe.cooking_time %> mins
+            · ⭐ <%= Number(recipe.avg_rating).toFixed(1) %>
+        </p>
+    </div>
+</div>
