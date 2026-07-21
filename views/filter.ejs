@@ -1,33 +1,104 @@
 <%- include("partials/header") %>
 <%- include("partials/navbar") %>
 
-<main>
-    <section class="search-discovery-bar">
+<main class="discovery-page">
+
+    <section class="discovery-hero">
         <div class="container">
-            <%- include("partials/search-filter-bar", { query: "" }) %>
+
+            <p class="section-label">
+                REFINE YOUR CHOICES
+            </p>
+
+            <h1>Filtered Recipes</h1>
+
+            <p>
+                Adjust category, difficulty,
+                cooking time, rating and sorting.
+            </p>
+
+            <%- include(
+                "partials/search-filter-bar",
+                {
+                    query: "",
+                    filters: filters || {}
+                }
+            ) %>
+
         </div>
     </section>
 
-    <section class="recipe-preview-section">
+    <section class="discovery-results-section">
         <div class="container">
-            <div class="section-heading">
-                <p class="section-label">FILTERED</p>
-                <h2>Filtered Recipes</h2>
+
+            <div class="discovery-results-heading">
+
+                <div>
+                    <p class="section-label">
+                        MATCHING RECIPES
+                    </p>
+
+                    <h2>
+                        Your filtered results
+                    </h2>
+                </div>
+
+                <span class="result-count">
+                    <%= results.length %>
+                    result<%= results.length === 1 ? "" : "s" %>
+                </span>
+
             </div>
 
-            <div class="row g-4">
-                <% if (results.length === 0) { %>
-                    <p class="text-center">No recipes match these filters. Try adjusting them.</p>
-                <% } %>
-                <% results.forEach(recipe => { %>
-                    <div class="col-md-4">
-                        <%- include("partials/recipe-card", { recipe }) %>
+            <% if (results.length === 0) { %>
+
+                <div class="discovery-empty-state">
+
+                    <div class="empty-icon">
+                        🧺
                     </div>
-                <% }) %>
-            </div>
+
+                    <h3>
+                        No recipes match these filters
+                    </h3>
+
+                    <p>
+                        Remove one or two filters and try again.
+                    </p>
+
+                    <a
+                        href="/filter"
+                        class="btn btn-brown"
+                    >
+                        Clear Filters
+                    </a>
+
+                </div>
+
+            <% } else { %>
+
+                <div class="row g-4">
+
+                    <% results.forEach(recipe => { %>
+
+                        <div class="col-md-6 col-lg-4">
+
+                            <%- include(
+                                "partials/recipe-card",
+                                { recipe }
+                            ) %>
+
+                        </div>
+
+                    <% }) %>
+
+                </div>
+
+            <% } %>
+
         </div>
     </section>
+
 </main>
 
 <%- include("partials/footer") %>
-
