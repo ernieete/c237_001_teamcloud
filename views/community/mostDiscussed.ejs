@@ -17,52 +17,56 @@
 
     <div class="row">
 
-        <% if (recipes.length === 0) { %>
+        <% if (!recipes || recipes.length === 0) { %>
 
-            <p>No comments yet.</p>
+            <div class="col-12 text-center mt-4">
+                <p>No comments yet.</p>
+            </div>
 
-        <% } %>
+        <% } else { %>
 
-        <% recipes.forEach(recipe => { %>
+            <% recipes.forEach(recipe => { %>
 
-            <div class="col-md-4 mb-4">
+                <div class="col-md-4 mb-4">
 
-                <div class="card">
+                    <div class="card">
 
-                    <% if (recipe.image) { %>
+                        <% if (recipe.image) { %>
 
-                        <img
-                            src="/uploads/<%= recipe.image %>"
-                            class="card-img-top"
-                            alt="<%= recipe.title %>"
-                        >
+                            <img
+                                src="/uploads/<%= recipe.image %>"
+                                class="card-img-top"
+                                alt="<%= recipe.title %>"
+                            >
 
-                    <% } %>
+                        <% } %>
 
-                    <div class="card-body">
+                        <div class="card-body">
 
-                        <h5>
-                            <%= recipe.title %>
-                        </h5>
+                            <h5>
+                                <%= recipe.title %>
+                            </h5>
 
-                        <p>
-                            💬 <%= recipe.totalComments %> comment(s)
-                        </p>
+                            <p>
+                                💬 <%= recipe.totalComments %> comment(s)
+                            </p>
 
-                        <a
-                            href="/recipes/<%= recipe.id %>"
-                            class="btn btn-primary"
-                        >
-                            View Recipe
-                        </a>
+                            <a
+                                href="/recipes/<%= recipe.id %>"
+                                class="btn btn-primary"
+                            >
+                                View Recipe
+                            </a>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-            </div>
+            <% }); %>
 
-        <% }); %>
+        <% } %>
 
     </div>
 

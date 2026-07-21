@@ -72,9 +72,13 @@ function getMostDiscussedRecipes(callback) {
             recipes.image,
             COUNT(comments.id) AS totalComments
         FROM recipes
-        LEFT JOIN comments
+        INNER JOIN comments
             ON recipes.id = comments.recipe_id
-        GROUP BY recipes.id
+        GROUP BY
+            recipes.id,
+            recipes.title,
+            recipes.image
+        HAVING COUNT(comments.id) > 0
         ORDER BY totalComments DESC
         LIMIT 5
     `;
