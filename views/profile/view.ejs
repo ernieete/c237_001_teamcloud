@@ -1,0 +1,123 @@
+<%- include("../partials/header") %>
+<%- include("../partials/navbar") %>
+
+<main class="profile-page">
+    <div class="profile-container">
+
+        <% if (typeof message !== "undefined" && message) { %>
+            <div class="alert alert-success">
+                <%= message %>
+            </div>
+        <% } %>
+
+        <% if (typeof error !== "undefined" && error) { %>
+            <div class="alert alert-danger">
+                <%= error %>
+            </div>
+        <% } %>
+
+        <section class="profile-card">
+
+            <div class="profile-header">
+
+                <div class="profile-image-section">
+                    <img
+                        class="profile-avatar"
+                        src="<%= user.profile_image
+                            ? '/uploads/profiles/' + user.profile_image
+                            : '/images/default-profile.png' %>"
+                        alt="<%= user.username %>'s profile picture"
+                        onerror="this.onerror=null; this.src='/images/default-profile.png';"
+                    >
+
+                    <form
+                        class="profile-upload-form"
+                        action="/profile/image"
+                        method="POST"
+                        enctype="multipart/form-data"
+                    >
+                        <input
+                            type="file"
+                            name="profileImage"
+                            accept=".jpg,.jpeg,.png,.webp"
+                            required
+                        >
+
+                        <button type="submit">
+                            Upload Picture
+                        </button>
+                    </form>
+                </div>
+
+                <div class="profile-summary">
+                    <h1><%= user.username %></h1>
+
+                    <span class="profile-role">
+                        <%= user.role %>
+                    </span>
+
+                    <p>
+                        Manage your personal details, password, recipes and
+                        favourite recipes.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="profile-details">
+                <h2>My Profile</h2>
+
+                <div class="profile-detail-row">
+                    <span class="profile-detail-label">Email</span>
+                    <span class="profile-detail-value">
+                        <%= user.email %>
+                    </span>
+                </div>
+
+                <div class="profile-detail-row">
+                    <span class="profile-detail-label">Address</span>
+                    <span class="profile-detail-value">
+                        <%= user.address || "Not added yet" %>
+                    </span>
+                </div>
+
+                <div class="profile-detail-row">
+                    <span class="profile-detail-label">Contact</span>
+                    <span class="profile-detail-value">
+                        <%= user.contact || "Not added yet" %>
+                    </span>
+                </div>
+
+                <div class="profile-detail-row">
+                    <span class="profile-detail-label">Member Since</span>
+                    <span class="profile-detail-value">
+                        <%= user.created_at
+                            ? new Date(user.created_at).toLocaleDateString("en-SG")
+                            : "Not available" %>
+                    </span>
+                </div>
+            </div>
+
+            <div class="profile-actions">
+                <a href="/profile/edit" class="primary-button">
+                    Edit Profile
+                </a>
+
+                <a href="/profile/changePassword">
+                    Change Password
+                </a>
+
+                <a href="/profile/recipes">
+                    My Recipes
+                </a>
+
+                <a href="/profile/favourites">
+                    My Favourites
+                </a>
+            </div>
+
+        </section>
+    </div>
+</main>
+
+<%- include("../partials/footer") %>

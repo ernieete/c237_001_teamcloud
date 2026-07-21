@@ -1,0 +1,211 @@
+<%- include("../partials/header") %>
+<%- include("../partials/navbar") %>
+
+<main class="py-5">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <p class="section-label">
+                SHARE YOUR RECIPE
+            </p>
+
+            <h1 class="recipe-title">
+                Add Recipe
+            </h1>
+
+            <p class="text-muted">
+                Share your favourite homemade recipe with the Simply Homemade community.
+            </p>
+
+        </div>
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-8">
+
+                <div class="recipe-form-card">
+
+                    <form action="/recipes/add" method="POST" enctype="multipart/form-data">
+
+                        <div class="mb-3">
+                            <label class="form-label">Recipe Title</label>
+
+                            <input
+                                type="text"
+                                name="title"
+                                class="form-control"
+                                required
+                            >
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+
+                            <textarea
+                                name="description"
+                                class="form-control"
+                                rows="3"
+                            ></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Ingredients</label>
+
+                            <textarea
+                                name="ingredients"
+                                class="form-control"
+                                rows="5"
+                                required
+                            ></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Instructions</label>
+
+                            <textarea
+                                name="instructions"
+                                class="form-control"
+                                rows="5"
+                                required
+                            ></textarea>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    Servings
+                                </label>
+
+                                <input
+                                    type="number"
+                                    name="servings"
+                                    class="form-control"
+                                >
+
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    Cooking Time (minutes)
+                                </label>
+
+                                <input
+                                    type="number"
+                                    name="cooking_time"
+                                    class="form-control"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    Category
+                                </label>
+
+                                <select
+                                    name="category"
+                                    class="form-select"
+                                >
+                                    <option value="breakfast">Breakfast</option>
+                                    <option value="lunch">Lunch</option>
+                                    <option value="dinner">Dinner</option>
+                                    <option value="dessert">Dessert</option>
+                                    <option value="drinks">Drinks</option>
+                                    <option value="snacks">Snacks</option>
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    Difficulty
+                                </label>
+
+                                <select
+                                    name="difficulty"
+                                    class="form-select"
+                                >
+                                    <option value="easy">Easy</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="hard">Hard</option>
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                YouTube Tutorial Link
+                            </label>
+
+                            <input
+                                type="url"
+                                name="youtube_link"
+                                class="form-control"
+                                placeholder="https://www.youtube.com/watch?v=..."
+                                required
+                            >
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+                                Recipe Image
+                            </label>
+
+                            <input
+                                type="file"
+                                name="image"
+                                class="form-control"
+                                accept="image/*"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+
+                            <a
+                                href="/recipes"
+                                class="btn btn-outline-brown"
+                            >
+                                ← Back to Recipes
+                            </a>
+
+                            <button
+                                type="submit"
+                                class="btn btn-brown"
+                            >
+                                + Add Recipe
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<%- include("../partials/footer") %>

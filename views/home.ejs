@@ -72,25 +72,51 @@
 
             <div class="row g-4">
                 <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon">🔍</div>
-                        <h3>Discover Recipes</h3>
-                        <p>
-                            Search and filter recipes by category,
-                            difficulty, cooking time and rating.
-                        </p>
-                    </div>
+                    <a href="/recipes" class="feature-card-link">
+
+                        <div class="feature-card">
+
+                            <div class="feature-icon">🔍</div>
+
+                            <h3>Discover Recipes</h3>
+
+                            <p>
+                                Search and filter recipes by category,
+                                difficulty, cooking time and rating.
+                            </p>
+
+                        </div>
+
+                    </a>
                 </div>
 
                 <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon">📝</div>
-                        <h3>Share Your Cooking</h3>
-                        <p>
-                            Add ingredients, instructions and an
-                            image to share your homemade recipe.
-                        </p>
-                    </div>
+
+                    <% if (currentUser) { %>
+
+                        <a href="/recipes/add" class="feature-card-link">
+
+                    <% } else { %>
+
+                        <a href="/login" class="feature-card-link">
+
+                    <% } %>
+
+                            <div class="feature-card">
+
+                                <div class="feature-icon">📝</div>
+
+                                <h3>Share Your Cooking</h3>
+
+                                <p>
+                                    Add ingredients, instructions and an
+                                    image to share your homemade recipe.
+                                </p>
+
+                            </div>
+
+                        </a>
+
                 </div>
 
                 <div class="col-md-4">

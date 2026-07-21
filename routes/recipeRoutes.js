@@ -1,20 +1,42 @@
 const express = require("express");
-
 const router = express.Router();
 
-// Member 2 will add recipe routes here.
-//
-// Planned routes:
-// GET  /recipes
-router.get("/test", (req, res) => {
-    res.send("Recipe routes are connected");
-});
+const recipeController = require("../controllers/recipeController");
+const { uploadRecipeImage } = require("../middleware/uploadMiddleware");
 
-// GET  /recipes/add
-// POST /recipes/add
-// GET  /recipes/:id
-// GET  /recipes/edit/:id
-// POST /recipes/edit/:id
-// POST /recipes/delete/:id
+// Display all recipes
+router.get("/", recipeController.showRecipes);
+
+// Show Add Recipe page
+router.get("/add", recipeController.showAddRecipe);
+
+// Handle Add Recipe form
+router.post(
+    "/add",
+    uploadRecipeImage.single("image"),
+    recipeController.addRecipe
+);
+
+// Show Edit Recipe page
+router.get(
+    "/edit/:id",
+    recipeController.showEditRecipe
+);
+
+// Handle Edit Recipe
+router.post(
+    "/edit/:id",
+    uploadRecipeImage.single("image"),
+    recipeController.editRecipe
+);
+
+// Delete Recipe
+router.post(
+    "/delete/:id",
+    recipeController.deleteRecipe
+);
+
+// Display a single recipe
+router.get("/:id", recipeController.showRecipeDetails);
 
 module.exports = router;
