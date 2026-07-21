@@ -17,10 +17,9 @@ const uploadRecipeImage = multer({
     storage: recipeStorage
 });
 
-
 /* ---------- Profile Images ---------- */
 
-const profileDirectory = path.join(
+const uploadDirectory = path.join(
     __dirname,
     "..",
     "public",
@@ -28,26 +27,40 @@ const profileDirectory = path.join(
     "profiles"
 );
 
-fs.mkdirSync(profileDirectory, { recursive: true });
+fs.mkdirSync(uploadDirectory, { recursive: true });
 
 const profileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, profileDirectory);
+        cb(null, uploadDirectory);
     },
     filename: (req, file, cb) => {
         const extension = path.extname(file.originalname).toLowerCase();
-
-        cb(
-            null,
-            `profile-${req.session.user.id}-${Date.now()}${extension}`
-        );
+        const safeName = `profile-${req.session.user.id}-${Date.now()}${extension}`;
+        cb(null, safeName);
     }
 });
 
-const uploadProfileImage = multer({
-    storage: profileStorage
-});
+const allowedTypes = new Set([
+    "image/jpeg",
+    "image/png",
+    "image/webp"
+]);
 
+const uploadProfileImage = multer({
+    storage: profileStorage,
+    limits: {
+        fileSize: 2 * 1024 * 1024
+    },
+    fileFilter: (req, file, cb) => {
+        if (!allowedTypes.has(file.mimetype)) {
+            return cb(
+                new Error("Only JPG, PNG and WEBP images are allowed.")
+            );
+        }
+
+        cb(null, true);
+    }
+});
 
 module.exports = {
     uploadRecipeImage,

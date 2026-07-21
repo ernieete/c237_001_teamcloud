@@ -1,0 +1,8 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<main class="page-section"><div class="container"><div class="profile-card">
+  <div class="profile-sidebar text-center"><img class="profile-avatar" src="/uploads/profiles/<%= user.profile_image || 'default-profile.png' %>" alt="Profile picture" onerror="this.src='https://placehold.co/180x180?text=Profile'"><h2><%= user.username %></h2><span class="role-badge"><%= user.role %></span></div>
+  <div class="profile-content"><h1>User Details</h1><dl class="profile-details"><div><dt>Email</dt><dd><%= user.email %></dd></div><div><dt>Address</dt><dd><%= user.address || 'Not provided' %></dd></div><div><dt>Contact</dt><dd><%= user.contact || 'Not provided' %></dd></div><div><dt>Recipes</dt><dd><%= user.recipe_count %></dd></div><div><dt>Favourites</dt><dd><%= user.favourite_count %></dd></div></dl>
+  <div class="d-flex gap-2"><a class="btn btn-outline-brown" href="/admin/users">Back</a><% if (user.id !== currentUser.id) { %><form method="POST" action="/admin/users/<%= user.id %>/delete" onsubmit="return confirm('Delete this user? Their recipes, favourites, ratings and comments will also be deleted.');"><button class="btn btn-danger" type="submit">Delete User</button></form><% } %></div></div>
+</div></div></main>
+<%- include('../partials/footer') %>
