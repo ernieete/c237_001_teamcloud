@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favourite Recipes</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <!-- Include Navbar -->
+    <%- include('../partials/navbar') %>
+
+    <div class="container mt-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+                <h2 class="fw-bold">
+                    ❤️ My Favourite Recipes
+                </h2>
+
+                <p class="text-muted">
+                    Recipes you've saved for future cooking.
+                </p>
+            </div>
+
+            <div>
+                <span class="badge bg-danger fs-6">
+                    <%= favourites.length %> Saved
+                </span>
+            </div>
+
+        </div>
+
+        <% if (favourites.length === 0) { %>
+
+            <div class="text-center mt-5">
+
+                <img
+                    src="/images/empty-favourites.png"
+                    alt="No favourites"
+                    class="img-fluid"
+                    style="max-width:250px;">
+
+                <h3 class="mt-4">
+                    No favourites yet
+                </h3>
+
+                <p class="text-muted">
+                    Browse recipes and click the heart icon to save your favourite recipes.
+                </p>
+
+                <a href="/" class="btn btn-primary">
+                    Browse Recipes
+                </a>
+                <a href="/favourites/statistics"
+                    class="btn btn-outline-secondary">
+
+                    View Statistics
+
+                </a>
+            </div>
+
+        <% } else { %>
+
+        <div class="row">
+
+            <% favourites.forEach(recipe => { %>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+
+                <div class="card h-100 shadow-sm">
+
+                    <% if(recipe.image){ %>
+
+                        <img
+                            src="/uploads/<%= recipe.image %>"
+                            class="card-img-top"
+                            style="height:220px; object-fit:cover;"
+                            alt="<%= recipe.title %>">
+
+                    <% } else { %>
+
+                        <img
+                            src="/images/default-recipe.jpg"
+                            class="card-img-top"
+                            style="height:220px; object-fit:cover;"
+                            alt="Recipe">
+
+                    <% } %>
+
+                    <div class="card-body d-flex flex-column">
+
+                        <h4 class="card-title">
+
+                            <%= recipe.title %>
+
+                        </h4>
+
+                        <p class="text-muted">
+
+                            By <strong><%= recipe.username %></strong>
+
+                        </p>
+
+                        <p>
+
+                            <%= recipe.description.substring(0,120) %>...
+
+                        </p>
+
+                        <div class="mb-3">
+
+                            <span class="badge bg-success">
+
+                                <%= recipe.category %>
+
+                            </span>
+
+                            <span class="badge bg-secondary">
+
+                                <%= recipe.difficulty %>
+
+                            </span>
+
+                            <span class="badge bg-warning text-dark">
+
+                                <%= recipe.cooking_time %> mins
+
+                            </span>
+
+                        </div>
+
+                        <small class="text-muted">
+
+                            Saved on
+
+                            <%= new Date(recipe.favourite_date).toLocaleDateString() %>
+
+                        </small>
+
+                        <div class="mt-auto pt-3">
+
+                            <a
+                                href="/recipes/<%= recipe.recipe_id %>"
+                                class="btn btn-primary">
+
+                                View Recipe
+
+                            </a>
+
+                            <form
+                                action="/favourite/remove/<%= recipe.recipe_id %>"
+                                method="POST"
+                                class="d-inline">
+
+                                <button
+                                    class="btn btn-outline-danger"
+                                    onclick="return confirm('Remove this recipe from favourites?')">
+
+                                    Remove
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <% }) %>
+
+        </div>
+
+        <% } %>
+
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
