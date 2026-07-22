@@ -1,130 +1,233 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Edit Recipe</title>
-</head>
-<body>
+<%- include("../partials/header") %>
+<%- include("../partials/navbar") %>
 
-<h1>Edit Recipe</h1>
+<main class="py-5">
+    <div class="container">
 
-<form action="/recipes/edit/<%= recipe.id %>" method="POST" enctype="multipart/form-data">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
 
-    <label>Title</label><br>
-    <input
-        type="text"
-        name="title"
-        value="<%= recipe.title %>"
-        required
-    ><br><br>
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4 p-md-5">
 
-    <label>Description</label><br>
-    <textarea
-        name="description"
-    ><%= recipe.description %></textarea><br><br>
+                        <div class="mb-4">
+                            <h1 class="fw-bold mb-2">Edit Recipe</h1>
+                            <p class="text-muted mb-0">
+                                Update your recipe information below.
+                            </p>
+                        </div>
 
-    <label>Ingredients</label><br>
-    <textarea
-        name="ingredients"
-        required
-    ><%= recipe.ingredients %></textarea><br><br>
+                        <form
+                            action="/recipes/edit/<%= recipe.id %>"
+                            method="POST"
+                            enctype="multipart/form-data"
+                        >
 
-    <label>Instructions</label><br>
-    <textarea
-        name="instructions"
-        required
-    ><%= recipe.instructions %></textarea><br><br>
+                            <div class="mb-3">
+                                <label class="form-label">Title</label>
 
-    <label>Servings</label><br>
-    <input
-        type="number"
-        name="servings"
-        value="<%= recipe.servings %>"
-    ><br><br>
+                                <input
+                                    type="text"
+                                    name="title"
+                                    class="form-control"
+                                    value="<%= recipe.title %>"
+                                    required
+                                >
+                            </div>
 
-    <label>Category</label><br>
+                            <div class="mb-3">
+                                <label class="form-label">Description</label>
 
-    <select name="category">
+                                <textarea
+                                    name="description"
+                                    class="form-control"
+                                    rows="4"
+                                ><%= recipe.description %></textarea>
+                            </div>
 
-        <option value="breakfast" <%= recipe.category === "breakfast" ? "selected" : "" %>>Breakfast</option>
+                            <div class="mb-3">
+                                <label class="form-label">Ingredients</label>
 
-        <option value="lunch" <%= recipe.category === "lunch" ? "selected" : "" %>>Lunch</option>
+                                <textarea
+                                    name="ingredients"
+                                    class="form-control"
+                                    rows="6"
+                                    required
+                                ><%= recipe.ingredients %></textarea>
+                            </div>
 
-        <option value="dinner" <%= recipe.category === "dinner" ? "selected" : "" %>>Dinner</option>
+                            <div class="mb-3">
+                                <label class="form-label">Instructions</label>
 
-        <option value="dessert" <%= recipe.category === "dessert" ? "selected" : "" %>>Dessert</option>
+                                <textarea
+                                    name="instructions"
+                                    class="form-control"
+                                    rows="7"
+                                    required
+                                ><%= recipe.instructions %></textarea>
+                            </div>
 
-        <option value="drinks" <%= recipe.category === "drinks" ? "selected" : "" %>>Drinks</option>
+                            <div class="row">
 
-        <option value="snacks" <%= recipe.category === "snacks" ? "selected" : "" %>>Snacks</option>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Servings</label>
 
-    </select>
+                                    <input
+                                        type="number"
+                                        name="servings"
+                                        class="form-control"
+                                        value="<%= recipe.servings %>"
+                                        min="1"
+                                    >
+                                </div>
 
-    <br><br>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Category</label>
 
-    <label>Difficulty</label><br>
+                                    <select
+                                        name="category"
+                                        class="form-select"
+                                    >
+                                        <option value="breakfast" <%= recipe.category.toLowerCase() === "breakfast" ? "selected" : "" %>>
+                                            Breakfast
+                                        </option>
 
-    <select name="difficulty">
+                                        <option value="lunch" <%= recipe.category.toLowerCase() === "lunch" ? "selected" : "" %>>
+                                            Lunch
+                                        </option>
 
-        <option value="easy" <%= recipe.difficulty === "easy" ? "selected" : "" %>>Easy</option>
+                                        <option value="dinner" <%= recipe.category.toLowerCase() === "dinner" ? "selected" : "" %>>
+                                            Dinner
+                                        </option>
 
-        <option value="medium" <%= recipe.difficulty === "medium" ? "selected" : "" %>>Medium</option>
+                                        <option value="dessert" <%= recipe.category.toLowerCase() === "dessert" ? "selected" : "" %>>
+                                            Dessert
+                                        </option>
 
-        <option value="hard" <%= recipe.difficulty === "hard" ? "selected" : "" %>>Hard</option>
+                                        <option value="drinks" <%= recipe.category.toLowerCase() === "drinks" ? "selected" : "" %>>
+                                            Drinks
+                                        </option>
 
-    </select>
+                                        <option value="snacks" <%= recipe.category.toLowerCase() === "snacks" ? "selected" : "" %>>
+                                            Snacks
+                                        </option>
+                                    </select>
+                                </div>
 
-    <br><br>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Difficulty</label>
 
-    <label>Cooking Time (minutes)</label><br>
+                                    <select
+                                        name="difficulty"
+                                        class="form-select"
+                                    >
+                                        <option value="easy" <%= recipe.difficulty.toLowerCase() === "easy" ? "selected" : "" %>>
+                                            Easy
+                                        </option>
 
-    <input
-        type="number"
-        name="cooking_time"
-        value="<%= recipe.cooking_time %>"
-        required
-    >
+                                        <option value="medium" <%= recipe.difficulty.toLowerCase() === "medium" ? "selected" : "" %>>
+                                            Medium
+                                        </option>
 
-    <br><br>
+                                        <option value="hard" <%= recipe.difficulty.toLowerCase() === "hard" ? "selected" : "" %>>
+                                            Hard
+                                        </option>
+                                    </select>
+                                </div>
 
-    <label>YouTube Tutorial Link</label><br>
+                            </div>
 
-    <input
-        type="url"
-        name="youtube_link"
-        value="<%= recipe.youtube_link %>"
-        placeholder="https://www.youtube.com/watch?v=..."
-        
-    >
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    Cooking Time (minutes)
+                                </label>
 
-    <br><br>
+                                <input
+                                    type="number"
+                                    name="cooking_time"
+                                    class="form-control"
+                                    value="<%= recipe.cooking_time %>"
+                                    min="1"
+                                    required
+                                >
+                            </div>
 
-    <label>Recipe Image</label><br>
+                            <div class="mb-4">
+                                <label class="form-label">
+                                    YouTube Tutorial Link
+                                </label>
 
-    <p>Current Image:</p>
+                                <input
+                                    type="url"
+                                    name="youtube_link"
+                                    class="form-control"
+                                    value="<%= recipe.youtube_link || "" %>"
+                                    placeholder="https://www.youtube.com/watch?v=..."
+                                >
+                            </div>
 
-    <img
-        src="/uploads/<%= recipe.image %>"
-        alt="<%= recipe.title %>"
-        width="200"
-    >
+                            <div class="mb-4">
+                                <label class="form-label">
+                                    Recipe Image
+                                </label>
 
-    <br><br>
+                                <% if (recipe.image) { %>
 
-    <input
-        type="file"
-        name="image"
-        accept="image/*"
-    >
+                                    <div class="mb-3">
+                                        <p class="text-muted mb-2">
+                                            Current image
+                                        </p>
 
-    <br><br>
+                                        <img
+                                            src="/uploads/<%= recipe.image %>"
+                                            alt="<%= recipe.title %>"
+                                            class="img-fluid rounded"
+                                            style="max-height: 280px; object-fit: cover;"
+                                            onerror="this.onerror=null; this.src='/images/default-recipe.png';"
+                                        >
+                                    </div>
 
-    <button type="submit">
+                                <% } %>
 
-        Update Recipe
+                                <input
+                                    type="file"
+                                    name="image"
+                                    class="form-control"
+                                    accept="image/*"
+                                >
 
-    </button>
+                                <small class="text-muted">
+                                    Leave this empty to keep the current image.
+                                </small>
+                            </div>
 
-</form>
+                            <div class="d-flex flex-column flex-sm-row gap-2">
 
-</body>
-</html>
+                                <button
+                                    type="submit"
+                                    class="btn btn-brown"
+                                >
+                                    Update Recipe
+                                </button>
+
+                                <a
+                                    href="/recipes/<%= recipe.id %>"
+                                    class="btn btn-outline-secondary"
+                                >
+                                    Cancel
+                                </a>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<%- include("../partials/footer") %>
