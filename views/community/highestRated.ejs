@@ -1,0 +1,149 @@
+<%- include("../partials/header") %>
+<%- include("../partials/navbar") %>
+
+<main class="community-page">
+
+    <section class="community-hero">
+
+        <div class="container text-center">
+
+            <span class="community-icon">
+                ⭐
+            </span>
+
+            <p class="section-label">
+                COMMUNITY PICKS
+            </p>
+
+            <h1>
+                Highest Rated Recipes
+            </h1>
+
+            <p class="community-subtitle">
+                The recipes our community loves the most.
+            </p>
+
+            <a
+                href="/"
+                class="btn btn-light-custom"
+            >
+                ← Back to Home
+            </a>
+
+        </div>
+
+    </section>
+
+    <section class="community-results">
+
+        <div class="container">
+
+            <% if (!recipes || recipes.length === 0) { %>
+
+                <div class="discovery-empty-state">
+
+                    <div class="empty-icon">
+                        ⭐
+                    </div>
+
+                    <h2>
+                        No rated recipes yet
+                    </h2>
+
+                    <p>
+                        Be the first person to rate a recipe.
+                    </p>
+
+                    <a
+                        href="/"
+                        class="btn btn-brown"
+                    >
+                        Back to Home
+                    </a>
+
+                </div>
+
+            <% } else { %>
+
+                <div class="row g-4">
+
+                    <% recipes.forEach(recipe => { %>
+
+                        <div class="col-md-6 col-lg-4">
+
+                            <article class="discovery-recipe-card">
+
+                                <a
+                                    href="/recipes/<%= recipe.id %>"
+                                    class="discovery-card-image-link"
+                                >
+                                    <img
+                                        src="<%= getRecipeImagePath(recipe.image) %>"
+                                        alt="<%= recipe.title %>"
+                                        class="discovery-card-image"
+                                        onerror="this.onerror=null; this.src='/images/default-recipe.png';"
+                                    >
+                                </a>
+
+                                <div class="discovery-card-body">
+
+                                    <span class="discovery-category">
+                                        <%= recipe.category || "Recipe" %>
+                                    </span>
+
+                                    <h3 class="discovery-card-title">
+                                        <a href="/recipes/<%= recipe.id %>">
+                                            <%= recipe.title %>
+                                        </a>
+                                    </h3>
+
+                                    <div class="community-stat">
+                                        ⭐
+                                        <%= Number(
+                                            recipe.averageRating || 0
+                                        ).toFixed(1) %>
+                                        / 5
+                                    </div>
+
+                                    <p>
+                                        <%= recipe.totalRatings %>
+                                        rating(s)
+                                    </p>
+
+                                    <a
+                                        href="/recipes/<%= recipe.id %>"
+                                        class="btn btn-brown w-100"
+                                    >
+                                        View Recipe
+                                    </a>
+
+                                </div>
+
+                            </article>
+
+                        </div>
+
+                    <% }) %>
+
+                </div>
+
+            <% } %>
+
+            <div class="text-center mt-5">
+
+                <a
+                    href="/"
+                    class="btn btn-light-custom"
+                >
+                    ← Back to Home
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<%- include("../partials/footer") %>

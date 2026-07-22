@@ -1,0 +1,224 @@
+<div class="search-tools-card">
+
+    <!-- Search -->
+    <form
+        action="/search"
+        method="GET"
+        class="search-main-form"
+    >
+        <div class="search-input-wrap">
+
+            <span class="search-input-icon">
+                🔎
+            </span>
+
+            <input
+                type="text"
+                name="q"
+                class="form-control"
+                placeholder="Search by recipe name or ingredient..."
+                value="<%= typeof query !== 'undefined' ? query : '' %>"
+            >
+
+        </div>
+
+        <button
+            type="submit"
+            class="btn btn-brown search-submit"
+        >
+            Search
+        </button>
+    </form>
+
+    <div class="search-divider">
+        <span>or filter recipes</span>
+    </div>
+
+    <!-- Filters -->
+    <form
+        action="/filter"
+        method="GET"
+        class="filter-grid"
+    >
+        <% const f = typeof filters !== "undefined" ? filters : {}; %>
+
+        <select
+            name="category"
+            class="form-select"
+        >
+            <option value="">
+                All categories
+            </option>
+
+            <% [
+                "breakfast",
+                "lunch",
+                "dinner",
+                "dessert",
+                "drinks",
+                "snacks"
+            ].forEach(value => { %>
+
+                <option
+                    value="<%= value %>"
+                    <%= f.category === value ? "selected" : "" %>
+                >
+                    <%= value.charAt(0).toUpperCase() + value.slice(1) %>
+                </option>
+
+            <% }) %>
+        </select>
+
+        <select
+            name="difficulty"
+            class="form-select"
+        >
+            <option value="">
+                All difficulties
+            </option>
+
+            <% [
+                "easy",
+                "medium",
+                "hard"
+            ].forEach(value => { %>
+
+                <option
+                    value="<%= value %>"
+                    <%= f.difficulty === value ? "selected" : "" %>
+                >
+                    <%= value.charAt(0).toUpperCase() + value.slice(1) %>
+                </option>
+
+            <% }) %>
+        </select>
+
+        <select
+            name="cookTime"
+            class="form-select"
+        >
+            <option value="">
+                Any cooking time
+            </option>
+
+            <option
+                value="15"
+                <%= String(f.cookTime || "") === "15"
+                    ? "selected"
+                    : "" %>
+            >
+                Up to 15 mins
+            </option>
+
+            <option
+                value="30"
+                <%= String(f.cookTime || "") === "30"
+                    ? "selected"
+                    : "" %>
+            >
+                Up to 30 mins
+            </option>
+
+            <option
+                value="60"
+                <%= String(f.cookTime || "") === "60"
+                    ? "selected"
+                    : "" %>
+            >
+                Up to 1 hour
+            </option>
+        </select>
+
+        <select
+            name="minRating"
+            class="form-select"
+        >
+            <option value="">
+                Any rating
+            </option>
+
+            <option
+                value="4"
+                <%= String(f.minRating || "") === "4"
+                    ? "selected"
+                    : "" %>
+            >
+                4+ stars
+            </option>
+
+            <option
+                value="3"
+                <%= String(f.minRating || "") === "3"
+                    ? "selected"
+                    : "" %>
+            >
+                3+ stars
+            </option>
+
+            <option
+                value="2"
+                <%= String(f.minRating || "") === "2"
+                    ? "selected"
+                    : "" %>
+            >
+                2+ stars
+            </option>
+        </select>
+
+        <select
+            name="sort"
+            class="form-select"
+        >
+            <option
+                value="newest"
+                <%= !f.sort || f.sort === "newest"
+                    ? "selected"
+                    : "" %>
+            >
+                Newest first
+            </option>
+
+            <option
+                value="oldest"
+                <%= f.sort === "oldest"
+                    ? "selected"
+                    : "" %>
+            >
+                Oldest first
+            </option>
+
+            <option
+                value="most_favourited"
+                <%= f.sort === "most_favourited"
+                    ? "selected"
+                    : "" %>
+            >
+                Most favourited
+            </option>
+
+            <option
+                value="alphabetical"
+                <%= f.sort === "alphabetical"
+                    ? "selected"
+                    : "" %>
+            >
+                A–Z
+            </option>
+        </select>
+
+        <button
+            type="submit"
+            class="btn btn-light-custom"
+        >
+            Apply Filters
+        </button>
+
+        <a
+            href="/filter"
+            class="clear-filter-link"
+        >
+            Clear
+        </a>
+    </form>
+
+</div>

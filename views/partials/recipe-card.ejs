@@ -1,0 +1,65 @@
+<article class="discovery-recipe-card">
+
+    <a
+        href="/recipes/<%= recipe.id %>"
+        class="discovery-card-image-link"
+    >
+        <img
+            src="<%= getRecipeImagePath(recipe.image) %>"
+            alt="<%= recipe.title %>"
+            class="discovery-card-image"
+            onerror="this.onerror=null; this.src='/images/default-recipe.png';"
+        >
+    </a>
+
+    <div class="discovery-card-body">
+
+        <span class="discovery-category">
+            <%= recipe.category || "Recipe" %>
+        </span>
+
+        <h3 class="discovery-card-title">
+            <a href="/recipes/<%= recipe.id %>">
+                <%= recipe.title %>
+            </a>
+        </h3>
+
+        <div class="discovery-card-meta">
+            <span>
+                ⏱ <%= recipe.cooking_time || 0 %> mins
+            </span>
+
+            <span>
+                📊 <%= recipe.difficulty || "Not set" %>
+            </span>
+        </div>
+
+        <div class="discovery-card-footer">
+
+            <span class="discovery-rating">
+                ⭐
+                <%= Number(
+                    recipe.avg_rating ||
+                    recipe.averageRating ||
+                    0
+                ).toFixed(1) %>
+            </span>
+
+            <% if (typeof recipe.favourites_count !== "undefined") { %>
+                <span>
+                    ❤️ <%= recipe.favourites_count %>
+                </span>
+            <% } %>
+
+            <a
+                href="/recipes/<%= recipe.id %>"
+                class="discovery-view-link"
+            >
+                View recipe →
+            </a>
+
+        </div>
+
+    </div>
+
+</article>
