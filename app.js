@@ -144,7 +144,7 @@ app.get("/", async (req, res) => {
 app.use("/", authRoutes);
 app.use("/profile", profileRoutes);
 app.use("/recipes", recipeRoutes);
-app.use("/favourites", favouriteRoutes);
+app.use("/", favouriteRoutes);
 app.use("/", searchRoutes);
 app.use("/ratings", ratingRoutes);
 app.use("/comments", commentRoutes);

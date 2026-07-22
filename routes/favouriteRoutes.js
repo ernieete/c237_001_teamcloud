@@ -2,45 +2,32 @@ const express = require("express");
 
 const router = express.Router();
 
+const favouriteController = require("../controllers/favouriteController");
 
-const favouriteController = require('../controllers/favouriteController');
-
-const { isAuthenticated } = require('../middleware/auth');
-
+const { requireLogin } = require("../middleware/authMiddleware");
 
 router.get(
-    '/favourites',
-    isAuthenticated,
+    "/favourites",
+    requireLogin,
     favouriteController.viewFavourites
 );
 
-
 router.post(
-    '/favourite/add/:id',
-    isAuthenticated,
+    "/favourite/add/:id",
+    requireLogin,
     favouriteController.addFavourite
 );
 
-
 router.post(
-    '/favourite/remove/:id',
-    isAuthenticated,
+    "/favourite/remove/:id",
+    requireLogin,
     favouriteController.removeFavourite
 );
 
-
 router.get(
-    '/api/favourites/count',
-    isAuthenticated,
+    "/api/favourites/count",
+    requireLogin,
     favouriteController.getFavouriteCount
 );
-
-router.get(
-    "/favourites/statistics",
-    isAuthenticated,
-    favouriteController.viewStatistics
-);
-
-module.exports = router;
 
 module.exports = router;

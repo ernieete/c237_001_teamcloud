@@ -74,6 +74,21 @@
                             View Recipe
                         </a>
 
+                        <% if (currentUser) { %>
+                            <form
+                            action="/favourite/add/<%= recipe.id %>"
+                            method="POST"
+                            class="mb-2"
+                            >
+                            <button
+                            type="submit"
+                            class="btn btn-outline-danger w-100"
+                            >
+                            ❤️ Save to Favourites
+                        </button>
+                        </form>
+                        <% } %>
+
                         <% if (user.role === "admin" || user.id === recipe.user_id) { %>
 
                             <a

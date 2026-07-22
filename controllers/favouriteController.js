@@ -21,52 +21,60 @@ exports.addFavourite = async (req, res) => {
             [userId, recipeId]
         );
 
-        if (existing.length > 0) {
-            return res.redirect('back');
+        if (existing.length === 0) {
+            await query(
+                `INSERT INTO favourites (user_id, recipe_id)
+                 VALUES (?, ?)`,
+                [userId, recipeId]
+            );
         }
 
-        await query(
-            `INSERT INTO favourites (user_id, recipe_id)
-             VALUES (?, ?)`,
-            [userId, recipeId]
+        const previousPage = req.get("Referrer");
+
+        return res.redirect(
+            previousPage || `/recipes/${recipeId}`
         );
 
-        res.redirect('back');
-
     } catch (err) {
-        console.error(err);
-        res.status(500).send("Unable to add favourite.");
+        console.error("Add favourite error:", err);
+
+        return res.status(500).render("error", {
+            title: "Error",
+            message: "Unable to add this recipe to favourites."
+        });
     }
 };
-
 
 /**
  * Remove favourite
  * POST /favourite/remove/:id
  */
 exports.removeFavourite = async (req, res) => {
-
     try {
-
         const userId = req.session.user.id;
         const recipeId = req.params.id;
 
         await query(
             `DELETE FROM favourites
-             WHERE user_id=?
-             AND recipe_id=?`,
+             WHERE user_id = ?
+             AND recipe_id = ?`,
             [userId, recipeId]
         );
 
-        res.redirect('back');
+        const previousPage = req.get("Referrer");
+
+        return res.redirect(
+            previousPage || "/favourites"
+        );
 
     } catch (err) {
+        console.error("Remove favourite error:", err);
 
-        console.error(err);
-        res.status(500).send("Unable to remove favourite.");
-
+        return res.status(500).render("error", {
+            title: "Error",
+            message: "Unable to remove this recipe from favourites."
+        });
     }
-
 };
 
 
@@ -98,13 +106,11 @@ exports.viewFavourites = async (req, res) => {
 
         const stats = await exports.getStatisticsData(userId);
 
-        res.render('profile/myFavourites', {
-
+        res.render("profile/myFavourites", {
             title: "My Favourites",
-            favourites,
+            recipes: favourites,
             stats,
             user: req.session.user
-
         });
 
     } catch (err) {

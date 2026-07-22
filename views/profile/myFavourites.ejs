@@ -1,9 +1,106 @@
-<%- include('../partials/header') %>
-<%- include('../partials/navbar') %>
-<main class="page-section"><div class="container">
-  <div class="page-heading-row"><div><h1>My Favourite Recipes</h1><p>Your saved recipe collection.</p></div><a class="btn btn-outline-brown" href="/recipes">Explore Recipes</a></div>
-  <% if (!recipes.length) { %><div class="empty-card"><h3>No favourites yet</h3><p>Save a recipe and it will appear here.</p></div><% } else { %>
-    <div class="row g-4"><% recipes.forEach(recipe => { %><div class="col-md-6 col-lg-4"><div class="simple-recipe-card"><h3><%= recipe.title %></h3><p><%= recipe.description || 'No description.' %></p><a href="/recipes/<%= recipe.id %>">View recipe</a></div></div><% }) %></div>
-  <% } %>
-</div></main>
-<%- include('../partials/footer') %>
+<%- include("../partials/header") %>
+<%- include("../partials/navbar") %>
+
+<main class="page-section">
+    <div class="container">
+
+        <div class="page-heading-row">
+
+            <div>
+                <h1>❤️ My Favourite Recipes</h1>
+                <p>Your saved recipe collection.</p>
+            </div>
+
+            <a
+                class="btn btn-outline-brown"
+                href="/recipes"
+            >
+                Explore Recipes
+            </a>
+
+        </div>
+
+        <% if (!recipes || recipes.length === 0) { %>
+
+            <div class="empty-card">
+
+                <h3>No favourites yet</h3>
+
+                <p>
+                    Open a recipe and click
+                    “Save to Favourites”.
+                </p>
+
+                <a href="/recipes" class="btn btn-brown">
+                    Browse Recipes
+                </a>
+
+            </div>
+
+        <% } else { %>
+
+            <div class="row g-4">
+
+                <% recipes.forEach(recipe => { %>
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="simple-recipe-card">
+
+                            <% if (recipe.image) { %>
+
+                                <img
+                                    src="/uploads/<%= recipe.image %>"
+                                    alt="<%= recipe.title %>"
+                                    class="recipe-grid-image"
+                                    onerror="this.onerror=null; this.src='/images/default-recipe.png';"
+                                >
+
+                            <% } %>
+
+                            <h3>
+                                <%= recipe.title %>
+                            </h3>
+
+                            <p>
+                                <%= recipe.description || "No description." %>
+                            </p>
+
+                            <div class="d-grid gap-2">
+
+                                <a
+                                    href="/recipes/<%= recipe.id %>"
+                                    class="btn btn-brown"
+                                >
+                                    View Recipe
+                                </a>
+
+                                <form
+                                    action="/favourite/remove/<%= recipe.id %>"
+                                    method="POST"
+                                    onsubmit="return confirm('Remove this recipe from favourites?');"
+                                >
+                                    <button
+                                        type="submit"
+                                        class="btn btn-outline-danger w-100"
+                                    >
+                                        Remove from Favourites
+                                    </button>
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                <% }); %>
+
+            </div>
+
+        <% } %>
+
+    </div>
+</main>
+
+<%- include("../partials/footer") %>

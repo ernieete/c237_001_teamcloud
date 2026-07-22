@@ -73,6 +73,31 @@
 
         </div>
 
+        <% if (currentUser) { %>
+
+            <form
+                action="/favourite/add/<%= recipe.id %>"
+                method="POST"
+                class="mt-4"
+            >
+                <button
+                    type="submit"
+                    class="btn btn-danger"
+                >
+                    ❤️ Save to Favourites
+                </button>
+            </form>
+
+        <% } else { %>
+
+            <div class="mt-4">
+                <a href="/login" class="btn btn-outline-danger">
+                    🤍 Log in to Save
+                </a>
+            </div>
+
+        <% } %>
+
     </div>
 
 

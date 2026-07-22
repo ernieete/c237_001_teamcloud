@@ -134,14 +134,24 @@
                 </div>
 
                 <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon">❤️</div>
-                        <h3>Save Your Favourites</h3>
-                        <p>
-                            Keep recipes that you love in your own
-                            personal favourites collection.
-                        </p>
-                    </div>
+                    <% if (currentUser) { %>
+                        <a href="/favourites" class="feature-card-link">
+                    <% } else { %>
+                        <a href="/login" class="feature-card-link">
+                    <% } %>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">❤️</div>
+
+                            <h3>Save Your Favourites</h3>
+
+                            <p>
+                                Keep recipes that you love in your own
+                                personal favourites collection.
+                            </p>
+                        </div>
+
+                    </a>
                 </div>
             </div>
         </div>
