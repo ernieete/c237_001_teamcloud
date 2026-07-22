@@ -8,6 +8,7 @@ const { promisify } = require("util");
 const db = require("./config/db");
 const query = promisify(db.query).bind(db);
 
+
 const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const recipeRoutes = require("./routes/recipeRoutes");
@@ -16,6 +17,7 @@ const searchRoutes = require("./routes/searchRoutes");
 const ratingRoutes = require("./routes/ratingRoutes");
 const commentRoutes = require("./routes/commentRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;

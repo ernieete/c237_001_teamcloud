@@ -1,0 +1,126 @@
+<%- include("../partials/header") %>
+<%- include("../partials/navbar") %>
+
+<main>
+    <section class="feature-section">
+        <div class="container">
+
+            <div class="section-heading">
+                <p class="section-label">ADMIN AREA</p>
+                <h2>Dashboard</h2>
+                <p>An overview of activity across Simply Homemade.</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-3 col-6">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">👥</div>
+                        <h3><%= totals.totalUsers %></h3>
+                        <p>Total Users</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">🍲</div>
+                        <h3><%= totals.totalRecipes %></h3>
+                        <p>Total Recipes</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">💬</div>
+                        <h3><%= totals.totalComments %></h3>
+                        <p>Total Comments</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">⭐</div>
+                        <h3><%= totals.totalRatings %></h3>
+                        <p>Total Ratings</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-heading" style="margin-top: 70px;">
+                <p class="section-label">ANALYTICS</p>
+                <h2>Highlights</h2>
+            </div>
+
+            <div class="row g-4">
+
+                <div class="col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔥</div>
+                        <h3>Most Popular Recipe</h3>
+                        <% if (mostPopular) { %>
+                            <p>
+                                <strong><%= mostPopular.title %></strong>
+                                by <%= mostPopular.username %><br>
+                                <%= mostPopular.favourite_count %> favourites
+                            </p>
+                            <a href="/recipes/<%= mostPopular.id %>" class="btn btn-outline-brown">View recipe</a>
+                        <% } else { %>
+                            <p>No recipes yet.</p>
+                        <% } %>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">🏆</div>
+                        <h3>Highest Rated Recipe</h3>
+                        <% if (highestRated) { %>
+                            <p>
+                                <strong><%= highestRated.title %></strong>
+                                by <%= highestRated.username %><br>
+                                <%= Number(highestRated.average_rating).toFixed(1) %> ★
+                                (<%= highestRated.rating_count %> ratings)
+                            </p>
+                            <a href="/recipes/<%= highestRated.id %>" class="btn btn-outline-brown">View recipe</a>
+                        <% } else { %>
+                            <p>No ratings yet.</p>
+                        <% } %>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">✍️</div>
+                        <h3>Most Active User</h3>
+                        <% if (mostActiveUser && mostActiveUser.recipe_count > 0) { %>
+                            <p>
+                                <strong><%= mostActiveUser.username %></strong><br>
+                                <%= mostActiveUser.recipe_count %> recipes posted
+                            </p>
+                        <% } else { %>
+                            <p>No activity yet.</p>
+                        <% } %>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Most Used Category</h3>
+                        <% if (mostUsedCategory) { %>
+                            <p>
+                                <strong style="text-transform: capitalize;"><%= mostUsedCategory.category %></strong><br>
+                                <%= mostUsedCategory.category_count %> recipes
+                            </p>
+                        <% } else { %>
+                            <p>No recipes yet.</p>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center" style="margin-top: 50px;">
+                <a href="/admin/recipes" class="btn btn-brown btn-lg">Manage Recipes</a>
+            </div>
+
+        </div>
+    </section>
+</main>
+
+<%- include("../partials/footer") %>
