@@ -39,7 +39,7 @@ exports.addRecipe = (req, res) => {
         difficulty: req.body.difficulty,
         cooking_time: req.body.cooking_time,
         youtube_link: req.body.youtube_link,
-        image: req.file.filename
+        image: req.file ? req.file.filename : "default-recipe.png"
     };
 
     recipeModel.addRecipe(recipe, (err) => {
