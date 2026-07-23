@@ -89,7 +89,13 @@
                         </form>
                         <% } %>
 
-                        <% if (user.role === "admin" || user.id === recipe.user_id) { %>
+                        <% if (
+                            currentUser &&
+                            (
+                                currentUser.role === "admin" ||
+                                currentUser.id === recipe.user_id
+                            )
+                        ) { %>
 
                             <a
                                 href="/recipes/edit/<%= recipe.id %>"
